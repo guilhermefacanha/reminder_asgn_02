@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
  * Hello World Application
  * Reminder Group
  * - Guilherme Facanha #300294067
+ * - João Vitor Wilke Silva #300278748
  */
 public class HelloWorld extends JFrame {
 
