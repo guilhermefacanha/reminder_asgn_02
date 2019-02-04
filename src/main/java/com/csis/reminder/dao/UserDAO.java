@@ -18,4 +18,9 @@ public class UserDAO implements Serializable {
 		List<User> users = manager.createQuery("SELECT x FROM User x").getResultList();
 		return users;
 	}
+	
+	public void addUser(User user) {
+		EntityManager manager = Resources.getEntityManager();
+		manager.persist(user);
+	}
 }
