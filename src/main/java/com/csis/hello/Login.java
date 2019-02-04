@@ -49,6 +49,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setTitle("Reminder App");
 			setupComponents();
 			setupActions();
 	}
