@@ -1,5 +1,6 @@
 package com.csis.reminder.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -20,6 +21,7 @@ public class User {
 
 	private String firstName;
 	private String lastName;
+	@Column(unique=true)
 	private String email;
 	private String password;
 	private boolean enabled;
