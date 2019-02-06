@@ -1,10 +1,15 @@
 package com.csis.reminder.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.csis.reminder.entity.enumeration.UserType;
 
 @Entity
 @Table
@@ -16,8 +21,13 @@ public class User {
 
 	private String firstName;
 	private String lastName;
+	@Column(unique=true)
 	private String email;
 	private String password;
+	private boolean enabled;
+	
+	@Enumerated(EnumType.STRING)
+	private UserType type;
 
 	// GETS and SETS
 	public long getId() {
@@ -58,6 +68,22 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
+	public void setType(UserType type) {
+		this.type = type;
+	}
+	
+	public UserType getType() {
+		return type;
 	}
 
 
