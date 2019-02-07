@@ -30,6 +30,7 @@ public class Intro extends JFrame {
 	final String imgDirectory = Paths.get(homeDirectory, "img").toString();
 	final String img = imgDirectory + "/" + "loader.gif";
 	private JLabel lblImage;
+	private JLabel lblNewLabel_1;
 	
 	/**
 	 * Launch the application.
@@ -129,6 +130,10 @@ public class Intro extends JFrame {
 		
 				lblImage = new JLabel(new ImageIcon(img));
 				lblImage.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		lblNewLabel_1 = new JLabel("Connecting to database...");
+		lblNewLabel_1.setForeground(SystemColor.info);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -136,13 +141,19 @@ public class Intro extends JFrame {
 					.addContainerGap()
 					.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 430, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(394, Short.MAX_VALUE)
+					.addComponent(lblNewLabel_1)
+					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(28)
 					.addComponent(lblImage, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(27, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(lblNewLabel_1)
+					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
 		getContentPane().setLayout(groupLayout);
