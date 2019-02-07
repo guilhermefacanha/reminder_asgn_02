@@ -24,23 +24,37 @@ import javax.swing.border.EmptyBorder;
 import com.csis.reminder.dao.UserDAO;
 import com.csis.reminder.util.ScreenUtil;
 
+/**
+ * @author Reminder Group
+ * Class that is the entry point of the System
+ * If fires the JFrame where the user can login or register into the system
+ */
 public class Login extends JFrame {
 
 	private static final long serialVersionUID = 8041032027533025878L;
 	private JPanel contentPane;
+	
+	//text field for user email input
 	private JTextField txtEmail;
+	//text field for user password input
 	private JPasswordField txtPassword;
+
 	private JButton btnRegisterHere;
 	private JButton btnEnter;
 
+	//Register view frame object
 	private Register register = new Register(this);
-	private MainWindow mainWindow = new MainWindow();
+	//MainWindow view frame object
+	private MainWindow mainWindow;
+	
 	private JLabel label;
 	
+	//User Data Access Object
 	private UserDAO userDao = new UserDAO();
 
 	/**
 	 * Launch the application.
+	 * main method is used to be the entry point of the System
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -56,17 +70,21 @@ public class Login extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Constructor for the Login View Frame
 	 */
 	public Login() {
 		init();
-		setBounds(ScreenUtil.resizeScreen(0.4));
+		ScreenUtil.centerWindow(this);
 		createActions();
 		setTitle("Reminder - Login");
 		userDao.initSelec();
 	}
 
+	/**
+	 * Method that stores all button action functions
+	 */
 	private void createActions() {
+		
 		// action for button register
 		btnRegisterHere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -77,7 +95,7 @@ public class Login extends JFrame {
 			}
 		});
 
-		// action for enter
+		// action for login button
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String email = txtEmail.getText();
@@ -87,6 +105,7 @@ public class Login extends JFrame {
 					JOptionPane.showMessageDialog(getContentPane(), "Login Successful!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 					
+					mainWindow = new MainWindow();
 					if (!mainWindow.isVisible()) {
 						setVisible(false);
 						mainWindow.setVisible(true);
@@ -99,9 +118,12 @@ public class Login extends JFrame {
 		});
 	}
 
+	/**
+	 * Method that stores all GUI automatic generated code
+	 */
 	private void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 467, 293);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -141,30 +163,29 @@ public class Login extends JFrame {
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
 							.addGap(10))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnRegisterHere)
-							.addContainerGap(621, Short.MAX_VALUE))
+							.addContainerGap(320, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(lblLogin, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(label, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE))
-							.addContainerGap())))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblLogin, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE)
+								.addComponent(label, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 421, Short.MAX_VALUE))
+							.addGap(10))))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(247)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblPassword)
-						.addComponent(lblEmail))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnEnter, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addComponent(btnEnter, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-							.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-							.addComponent(txtPassword)))
-					.addContainerGap(216, Short.MAX_VALUE))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPassword)
+								.addComponent(lblEmail))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(txtPassword)
+								.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(142, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -173,7 +194,7 @@ public class Login extends JFrame {
 					.addComponent(lblLogin)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(label, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addGap(22)
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -181,7 +202,7 @@ public class Login extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPassword)
 						.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(11)
+					.addGap(15)
 					.addComponent(btnEnter)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
