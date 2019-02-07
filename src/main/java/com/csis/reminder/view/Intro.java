@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import com.csis.reminder.dao.UserDAO;
@@ -47,7 +46,6 @@ public class Intro extends JFrame {
 			
 			//load hibernate context
 			try {
-				Thread.sleep(1000);
 				UserDAO userDao = new UserDAO();
 				userDao.initSelec();
 				
