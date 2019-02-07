@@ -30,7 +30,7 @@ public class Register extends JFrame {
 	public Register(Login login) {
 		this.login = login;
 		init();
-		setBounds(ScreenUtil.resizeScreen(0.5));
+		setBounds(ScreenUtil.resizeScreen(0.4));
 		setTitle("New User");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		createActions();

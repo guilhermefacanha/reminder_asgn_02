@@ -2,6 +2,7 @@ package com.csis.reminder.view;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.csis.reminder.dao.UserDAO;
 import com.csis.reminder.util.ScreenUtil;
 
 public class Login extends JFrame {
@@ -33,6 +35,9 @@ public class Login extends JFrame {
 
 	private Register register = new Register(this);
 	private MainWindow mainWindow = new MainWindow();
+	private JLabel label;
+	
+	private UserDAO userDao = new UserDAO();
 
 	/**
 	 * Launch the application.
@@ -55,10 +60,10 @@ public class Login extends JFrame {
 	 */
 	public Login() {
 		init();
-		setBounds(ScreenUtil.resizeScreen(0.5));
+		setBounds(ScreenUtil.resizeScreen(0.4));
 		createActions();
 		setTitle("Reminder - Login");
-
+		userDao.initSelec();
 	}
 
 	private void createActions() {
@@ -75,9 +80,10 @@ public class Login extends JFrame {
 		// action for enter
 		btnEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String email = txtEmail.getText();
+				String password = new String(txtPassword.getPassword());
 				// verify login
-				if (txtEmail.getText().equals("admin@email.com")
-						&& new String(txtPassword.getPassword()).equals("admin")) {
+				if (userDao.verifyLogin(email,password)) {
 					JOptionPane.showMessageDialog(getContentPane(), "Login Successful!", "",
 							JOptionPane.INFORMATION_MESSAGE);
 					
@@ -100,75 +106,85 @@ public class Login extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JLabel lblLogin = new JLabel("LOGIN");
+		JLabel lblLogin = new JLabel("REMINDER");
 		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		txtEmail = new JTextField();
 		txtEmail.setColumns(10);
 
-		JLabel lblEmail = new JLabel("email");
+		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
 
-		JLabel lblPassword = new JLabel("password");
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 11));
 
 		txtPassword = new JPasswordField();
 
 		JSeparator separator = new JSeparator();
 
 		btnEnter = new JButton("Enter");
+		btnEnter.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
 
 		btnRegisterHere = new JButton("Register Here");
-		btnRegisterHere.setBackground(UIManager.getColor("info"));
-
+		btnRegisterHere.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRegisterHere.setBackground(SystemColor.info);
+		
+		label = new JLabel("LOGIN");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setFont(new Font("Tahoma", Font.BOLD, 16));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(separator, GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblLogin, GroupLayout.PREFERRED_SIZE, 794, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(174)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnEnter)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-										.addComponent(lblEmail)
-										.addComponent(lblPassword))
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)))))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)))
-					.addContainerGap())
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addGap(537)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPassword)
+								.addComponent(lblEmail))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnEnter, Alignment.TRAILING))))
+					.addGap(10))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 794, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(563, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblLogin, GroupLayout.PREFERRED_SIZE, 794, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(563, Short.MAX_VALUE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
 					.addComponent(btnRegisterHere)
-					.addContainerGap(178, Short.MAX_VALUE))
+					.addContainerGap(693, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
+					.addGap(6)
 					.addComponent(lblLogin)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addGap(27)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
+						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(9)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblPassword))
+						.addComponent(lblPassword)
+						.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnEnter)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGap(11)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnRegisterHere)
-					.addContainerGap(301, Short.MAX_VALUE))
+					.addGap(265))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
