@@ -2,6 +2,8 @@ package com.csis.reminder.view;
 
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.SplashScreen;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,23 +54,7 @@ public class Login extends JFrame {
 	//User Data Access Object
 	private UserDAO userDao = new UserDAO();
 
-	/**
-	 * Launch the application.
-	 * main method is used to be the entry point of the System
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Constructor for the Login View Frame
 	 */
@@ -77,7 +63,6 @@ public class Login extends JFrame {
 		ScreenUtil.centerWindow(this);
 		createActions();
 		setTitle("Reminder - Login");
-		userDao.initSelec();
 	}
 
 	/**
