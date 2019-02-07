@@ -29,7 +29,7 @@
 							<finalName>reminder</finalName>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.csis.reminder.view.Login</mainClass>
+									<mainClass>com.csis.reminder.view.Intro</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
