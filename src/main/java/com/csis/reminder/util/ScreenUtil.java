@@ -3,6 +3,7 @@ package com.csis.reminder.util;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.Window;
 
 public class ScreenUtil {
 
@@ -12,6 +13,13 @@ public class ScreenUtil {
 		Double height = screenSize.getHeight() * rate;
 
 		return new Rectangle(100, 100, width.intValue(), height.intValue());
+	}
+	
+	public static void centerWindow(Window frame) {
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+	    frame.setLocation(x, y);
 	}
 
 }

@@ -1,0 +1,7 @@
+com.csis.reminder.dao
+com.csis.reminder.dao.resources
+com.csis.reminder.entity
+com.csis.reminder.entity.enumeration
+com.csis.reminder.session
+com.csis.reminder.util
+com.csis.reminder.view
