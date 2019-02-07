@@ -66,6 +66,13 @@ public class Login extends JFrame {
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				// Creates the User Registration Window
+				Register frame = new Register();
+				frame.setVisible(true);
+				
+				// Closes Current Window
+				dispose();
+				
 			}
 		});
 		

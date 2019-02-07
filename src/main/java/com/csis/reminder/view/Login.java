@@ -114,16 +114,17 @@ public class Login extends JFrame {
 		txtEmail.setColumns(10);
 
 		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		txtPassword = new JPasswordField();
 
 		JSeparator separator = new JSeparator();
 
 		btnEnter = new JButton("Enter");
+		btnEnter.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnEnter.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
 
 		btnRegisterHere = new JButton("Register Here");
@@ -139,29 +140,31 @@ public class Login extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(separator, GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblPassword)
-								.addComponent(lblEmail))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnEnter, Alignment.TRAILING))))
-					.addGap(10))
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+							.addGap(10))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(btnRegisterHere)
+							.addContainerGap(621, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblLogin, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(label, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 727, Short.MAX_VALUE))
+							.addContainerGap())))
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(label, GroupLayout.PREFERRED_SIZE, 794, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(563, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblLogin, GroupLayout.PREFERRED_SIZE, 794, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(563, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnRegisterHere)
-					.addContainerGap(693, Short.MAX_VALUE))
+					.addGap(247)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPassword)
+						.addComponent(lblEmail))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(btnEnter, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(txtEmail, GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+							.addComponent(txtPassword)))
+					.addContainerGap(216, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -170,7 +173,7 @@ public class Login extends JFrame {
 					.addComponent(lblLogin)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(label, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addGap(27)
+					.addGap(22)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblEmail, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtEmail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -178,9 +181,9 @@ public class Login extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPassword)
 						.addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnEnter)
 					.addGap(11)
+					.addComponent(btnEnter)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 9, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnRegisterHere)

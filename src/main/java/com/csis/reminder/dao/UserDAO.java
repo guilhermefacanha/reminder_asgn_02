@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.swing.JOptionPane;
 
 import com.csis.reminder.dao.resources.Resources;
 import com.csis.reminder.entity.User;
@@ -28,7 +30,13 @@ public class UserDAO implements Serializable {
 	
 	public void addUser(User user) {
 		EntityManager manager = Resources.getEntityManager();
+		EntityTransaction transaction = manager.getTransaction(); 
+		transaction.begin();
 		manager.persist(user);
+		transaction.commit();
+		
+		JOptionPane.showMessageDialog(null, "User Created Successfully!");
+		
 	}
 
 	public boolean verifyLogin(String email, String password) {
