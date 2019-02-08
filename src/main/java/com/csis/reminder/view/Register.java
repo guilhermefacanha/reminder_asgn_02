@@ -25,21 +25,33 @@ import com.csis.reminder.util.MD5Util;
 import com.csis.reminder.util.ScreenUtil;
 import javax.swing.UIManager;
 
+/** 
+ * @author Reminder Group
+ * Class responsible for providing an interface for users 
+ * to register themselves  
+ */
+
 public class Register extends JFrame {
 
 	private static final long serialVersionUID = -2032331525617462314L;
 	private JPanel contentPane;
 	private Login login;
+	
 	private JButton btnBackToLogin;
 	private JLabel lblFirstName;
 	private JLabel lblLastName;
 	private JLabel lblEmail;
 	private JLabel lblPassword;
 	private JLabel lblConfirmPassword;
+	// text field for the user first name input
 	private JTextField txtFirstName;
+	// text field for the user last name input
 	private JTextField txtLastName;
+	// text field for the user email input
 	private JTextField txtEmail;
+	// text field for the user password input
 	private JPasswordField txtPassword;
+	// text field for the user password confirmation input
 	private JPasswordField txtConfirmPassword;
 	private JButton btnRegister;
 	private JLabel lblRequiredFields;
@@ -66,8 +78,11 @@ public class Register extends JFrame {
 		}
 	}
 
+	/**
+	 * method that stores all button action functions
+	 */
 	private void createActions() {
-		// Action to Return to Login Page
+		// action for login button
 		btnBackToLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				backToLogin();
@@ -76,14 +91,17 @@ public class Register extends JFrame {
 		});
 
 
-		// Actions to Attempt to Register New User
+		// action for register button
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				//User Data Access Object
 				UserDAO userDAO = new UserDAO();
+				
+				// gets input values from user and stores them in variables
 				String fName = txtFirstName.getText();
 				String lName = txtLastName.getText();
 				String email = txtEmail.getText();
+				// Hashes the 2 input passwords
 				String password = MD5Util.getMd5(new String(txtPassword.getPassword()));
 				String confirmPassword = MD5Util.getMd5(new String(txtConfirmPassword.getPassword()));
 
@@ -91,14 +109,16 @@ public class Register extends JFrame {
 					// check if form is validated
 					if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || password.isEmpty())
 						throw new Exception("Please fill in all the fields");
-
+					
+					// checks if the 2 passwords input match
 					if (!password.equals(confirmPassword))
 						throw new Exception("Input passwords do not match!");
 					
+					// checks if email is already registered
 					if(userDAO.emailExists(email))
 						throw new Exception("Email already registered!");
 						
-					// Creates User Object
+					// creates user object
 					User user = new User();
 					user.setFirstName(fName);
 					user.setLastName(lName);
@@ -107,28 +127,33 @@ public class Register extends JFrame {
 					user.setType(UserType.STUDENT);
 					user.setEnabled(true);
 
-					// Attempt to insert new user into DB
+					// attemps to add user to the db
 					try {
+						// calls method which adds the new user into the db via the userDAO
 						userDAO.addUser(user);
 					} catch (Exception ex) {
 						throw new Exception("Please contact the administrator");
 					}
 					
+					// displays successful registration message
 					JOptionPane.showMessageDialog(getContentPane(), "Registration Completed!\n You can Login now.", "Registration Completed",
 							JOptionPane.INFORMATION_MESSAGE);
 					
+					// redirects user to the login page
 					backToLogin();
 
 				} catch (Exception ex) {
 					JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Registration Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
-
 			}
 		});
 
 	}
-
+	
+	/**
+	 * method that stores all gui components
+	 */
 	private void init() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 536, 364);

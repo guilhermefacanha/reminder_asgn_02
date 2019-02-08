@@ -12,6 +12,13 @@ import com.csis.reminder.entity.User;
 import com.csis.reminder.session.UserSession;
 import com.csis.reminder.util.MD5Util;
 
+/**
+ * 
+ * @author Reminder Group
+ * Class is responsible for managing the User Data Access Object
+ * it contains the methods which allow us to perform CRUD operations on 
+ * our users
+ */
 public class UserDAO implements Serializable {
 
 	private static final long serialVersionUID = 5584599198950863626L;
@@ -31,6 +38,11 @@ public class UserDAO implements Serializable {
 		return users;
 	}
 	
+	/**
+	 * Method to insert (persist) a new user into our database
+	 * @param user - object which holds a user's data
+	 * its information is gathered in the Register class
+	 */	
 	public void addUser(User user) {
 		EntityManager manager = Resources.getEntityManager();
 		EntityTransaction transaction = manager.getTransaction(); 

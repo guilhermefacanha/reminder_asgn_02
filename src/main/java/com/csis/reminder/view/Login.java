@@ -29,7 +29,7 @@ import com.csis.reminder.util.ScreenUtil;
 /**
  * @author Reminder Group
  * Class that is the entry point of the System
- * If fires the JFrame where the user can login or register into the system
+ * It fires the JFrame where the user can login or register into the system
  */
 public class Login extends JFrame {
 
