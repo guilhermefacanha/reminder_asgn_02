@@ -20,6 +20,10 @@ import javax.swing.SwingWorker;
 import com.csis.reminder.dao.UserDAO;
 import com.csis.reminder.util.ScreenUtil;
 
+/**
+ * @author Reminder Group
+ * Class responsible for the splash screen for the system
+ */
 public class Intro extends JFrame {
 
 	private static final long serialVersionUID = -1430262372419051006L;

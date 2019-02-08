@@ -20,6 +20,9 @@ public class Resources {
 		}
 	}
 
+	/**
+	 * @return {@link EntityManager}  - connection manager with hibernate context
+	 */
 	public static EntityManager getEntityManager() {
 		return factory.createEntityManager();
 	}

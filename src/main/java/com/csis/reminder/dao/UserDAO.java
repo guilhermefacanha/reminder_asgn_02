@@ -40,7 +40,7 @@ public class UserDAO implements Serializable {
 	
 	/**
 	 * Method to insert (persist) a new user into our database
-	 * @param user - object which holds a user's data
+	 * @param user {@link User} - object which holds a user's data
 	 * its information is gathered in the Register class
 	 */	
 	public void addUser(User user) {

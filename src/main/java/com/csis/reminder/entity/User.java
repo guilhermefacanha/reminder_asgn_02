@@ -11,6 +11,11 @@ import javax.persistence.Table;
 
 import com.csis.reminder.entity.enumeration.UserType;
 
+/**
+ * @author Reminder Group
+ * Class responsible for storing user attributes and database configuration for user table
+ *
+ */
 @Entity
 @Table
 public class User {
