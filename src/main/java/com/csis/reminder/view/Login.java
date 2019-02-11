@@ -25,6 +25,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.csis.reminder.dao.UserDAO;
 import com.csis.reminder.util.ScreenUtil;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * @author Reminder Group
@@ -127,7 +129,7 @@ public class Login extends JFrame {
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		txtPassword = new JPasswordField();
-
+	
 		JSeparator separator = new JSeparator();
 
 		btnEnter = new JButton("Enter");
