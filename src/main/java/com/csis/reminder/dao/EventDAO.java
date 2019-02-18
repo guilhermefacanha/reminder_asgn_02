@@ -8,14 +8,15 @@ import javax.persistence.EntityTransaction;
 
 import com.csis.reminder.dao.resources.Resources;
 import com.csis.reminder.entity.Event;
+import com.csis.reminder.entity.Course;
 import com.csis.reminder.entity.User;
 
 /**
  * 
  * @author Reminder Group
- * Class is responsible for managing the User Data Access Object
- * it contains the methods which allow us to perform CRUD operations on 
- * our users
+ * Class is responsible for managing the Event Data Access Object
+ * it contains the methods which allows users to perform CRUD operations on 
+ * their events
  */
 
 
@@ -36,6 +37,7 @@ public class EventDAO implements Serializable {
 	}
 	
 	/**
+	 * Method which retrieves all the events of a user and returns a list of them
 	 * @param user - provides the user which the program will load the events from
 	 * @return - returns a list of Event objects from that user
 	 */
@@ -45,6 +47,19 @@ public class EventDAO implements Serializable {
 		List<Event> events = manager.createQuery("SELECT x FROM Event x").getResultList();
 		return events;
 	}
+	
+	/**
+	 * Method which retrieves all the events of a user, filtered by a course
+	 * @param user - provides the user which the program will load the events from
+	 * @return - returns a list of Event objects from that user
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Event> getAllEventsByCourse(User user, Course course) {
+		EntityManager manager = Resources.getEntityManager();
+		List<Event> events = manager.createQuery("SELECT x FROM Event x WHERE Course = " + course).getResultList(); // Where course = ?
+		return events;
+	}
+	
 	
 	
 }

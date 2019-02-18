@@ -15,16 +15,13 @@ import com.csis.reminder.entity.Course;
 	 * 
 	 * @author Reminder Group
 	 * Class is responsible for managing the course Data Access Object
-	 * it contains the methods which allow us to perform CRUD operations 
-	 *
+	 * it contains the methods which allows users to perform CRUD operations 
+	 * on their courses
 	 */
 	public class CourseDAO implements Serializable {
 
-		/**
-		 * 
-		 */
+		
 		private static final long serialVersionUID = 7385285317285391401L;
-
 	
 		/**
 		 * Method to run a first query to initialize the database connection context
@@ -43,8 +40,8 @@ import com.csis.reminder.entity.Course;
 		
 		/**
 		 * Method to insert (persist) a new user into our database
-		 * @param user {@link User} - object which holds a user's data
-		 * its information is gathered in the Register class
+		 * @param course {@link Course} - object which holds a course's data
+		 * 
 		 */	
 		public void addCourse(Course course) {
 			EntityManager manager = Resources.getEntityManager();

@@ -22,21 +22,31 @@ public class Course
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private long id;
-
+		private User user;
 		private String courseName;
-		private String description;
-		private String educationalInstitution ;
+		private String description; // I believe we shouldn't require this attribute - jvws
+		private String educationalInstitution ; // I believe we shouldn't require this attribute - jvws
 		private String courseInstructor;
-		private Date  startDate;
-		private Date  endDate;
+		private Date  startDate; // I believe we shouldn't require this attribute - jvws
+		private Date  endDate; // I believe we shouldn't require this attribute - jvws
 		
-		// GETS and SETS
+		// getters and setters
+		
+		
 		public long getId() {
 			return id;
-		}
+		}		
 
 		public void setId(long id) {
 			this.id = id;
+		}
+		
+		public User getUser() {
+			return user;
+		}
+
+		public void setUser(User user) {
+			this.user = user;
 		}
 		
 		public String getCourseName()

@@ -1,9 +1,7 @@
 package com.csis.reminder.entity;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,20 +22,20 @@ public class Event {
 	private long id;
 	
 	// References the courseID - should be later replaced by creating a CourseEvent entity
-	private long courseID;
-	
+	private Course course;	
 	private String eventName;
 	private String description;
-	private String date; // Maybe change to Date java.sql?
+	private String date; // Maybe change to Date java.sql? 
 	private String time; // Maybe change to Time java.sql? 
 	
 	// getters and setters
-	public long getId() {
-		return id;
+	public Course getCourse() {
+		return course;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setCourse(Course course) {
+		this.course = course;
 	}
+	
 	public String getEventName() {
 		return eventName;
 	}
