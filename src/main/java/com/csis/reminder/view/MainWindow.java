@@ -51,7 +51,7 @@ public class MainWindow extends JFrame {
 	private JMenuItem mntnAddCourses;
 	private JMenu mnEvents;
 	private JMenuItem mntnListEvents;
-	private JMenuItem mntnAddEvent;
+	private JMenuItem mntnAddEvents;
 
 	/**
 	 * Constructor to create the frame and call initialization methods
@@ -117,6 +117,34 @@ public class MainWindow extends JFrame {
 			}			
 		});
 		
+		// menu item list courses action
+		mntnListCourses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}			
+		});
+		
+		// menu item add a course action
+		mntnAddCourses.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}			
+		});
+		
+		// menu item list events action
+		mntnListEvents.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}			
+		});
+		
+		// menu item add an event action
+		mntnAddEvents.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}			
+		});
+		
 		
 		
 		
@@ -159,8 +187,8 @@ public class MainWindow extends JFrame {
 		mntnListEvents = new JMenuItem("List Events");
 		mnEvents.add(mntnListEvents);
 		
-		mntnAddEvent = new JMenuItem("Add an Event");
-		mnEvents.add(mntnAddEvent);
+		mntnAddEvents = new JMenuItem("Add an Event");
+		mnEvents.add(mntnAddEvents);
 
 		JMenu mnExit = new JMenu("Exit");
 		mnExit.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
