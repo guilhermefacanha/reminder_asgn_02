@@ -5,8 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.*;
+import com.csis.reminder.entity.User;
+
+
 
 @Entity
 @Table
@@ -22,17 +26,16 @@ public class Course
 		@Id
 		@GeneratedValue(strategy = GenerationType.IDENTITY)
 		private long id;
+		@ManyToOne
 		private User user;
 		private String courseName;
-		private String description; // I believe we shouldn't require this attribute - jvws
-		private String educationalInstitution ; // I believe we shouldn't require this attribute - jvws
-		private String courseInstructor;
-		private Date  startDate; // I believe we shouldn't require this attribute - jvws
-		private Date  endDate; // I believe we shouldn't require this attribute - jvws
+		//private String description; // I believe we shouldn't require this attribute - jvws
+		//private String educationalInstitution ; // I believe we shouldn't require this attribute - jvws
+		//private String courseInstructor;
+		//private Date  startDate; // I believe we shouldn't require this attribute - jvws
+		//private Date  endDate; // I believe we shouldn't require this attribute - jvws
 		
-		// getters and setters
-		
-		
+		// getters and setters		
 		public long getId() {
 			return id;
 		}		
@@ -59,55 +62,7 @@ public class Course
 			this.courseName = courseName;
 		}
 
-		public String getDescription()
-		{
-			return description;
-		}
-
-		public void setDescription(String description)
-		{
-			this.description = description;
-		}
-
-		public Date getStartDate()
-		{
-			return startDate;
-		}
-
-		public void setStartDate(Date startDate)
-		{
-			this.startDate = startDate;
-		}
-
-		public Date getEndDate()
-		{
-			return endDate;
-		}
-
-		public void setEndDate(Date endDate)
-		{
-			this.endDate = endDate;
-		}
-		public String getEducationalInstitution()
-		{
-			return educationalInstitution;
-		}
-
-		public void setEducationalInstitution(String educationalInstitution)
-		{
-			this.educationalInstitution = educationalInstitution;
-		}
-
-		public String getCourseInstructor()
-		{
-			return courseInstructor;
-		}
-
-		public void setCourseInstructor(String courseInstructor)
-		{
-			this.courseInstructor = courseInstructor;
-		}
-	
+		
 
 	}
 

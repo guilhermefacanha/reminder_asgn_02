@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 
 import com.csis.reminder.dao.resources.Resources;
 import com.csis.reminder.entity.Course;
+import com.csis.reminder.entity.User;
 
 
 	/**
@@ -32,10 +33,10 @@ import com.csis.reminder.entity.Course;
 		}
 
 		@SuppressWarnings("unchecked")
-		public List<Course> getAllCourses() {
+		public List<Course> getAllCourses(User user) {
 			EntityManager manager = Resources.getEntityManager();
-			List<Course> users = manager.createQuery("SELECT x FROM Course x").getResultList();
-			return users;
+			List<Course> courses = manager.createQuery("SELECT x FROM Course x Where x = "+user.getId()).getResultList();
+			return courses;
 		}	
 		
 		/**

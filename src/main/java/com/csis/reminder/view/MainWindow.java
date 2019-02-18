@@ -46,6 +46,12 @@ public class MainWindow extends JFrame {
 	private JList lstUsers;
 	
 	private DefaultListModel dlm = new DefaultListModel();
+	private JMenu mnCourses;
+	private JMenuItem mntnListCourses;
+	private JMenuItem mntnAddCourses;
+	private JMenu mnEvents;
+	private JMenuItem mntnListEvents;
+	private JMenuItem mntnAddEvent;
 
 	/**
 	 * Constructor to create the frame and call initialization methods
@@ -137,6 +143,24 @@ public class MainWindow extends JFrame {
 		
 		mntmNewUser = new JMenuItem("New User");
 		mnUsers.add(mntmNewUser);
+		
+		mnCourses = new JMenu("Couses");
+		menu.add(mnCourses);
+		
+		mntnListCourses = new JMenuItem("List Couses");
+		mnCourses.add(mntnListCourses);
+		
+		mntnAddCourses = new JMenuItem("Add a Course");
+		mnCourses.add(mntnAddCourses);
+		
+		mnEvents = new JMenu("Events");
+		menu.add(mnEvents);
+		
+		mntnListEvents = new JMenuItem("List Events");
+		mnEvents.add(mntnListEvents);
+		
+		mntnAddEvent = new JMenuItem("Add an Event");
+		mnEvents.add(mntnAddEvent);
 
 		JMenu mnExit = new JMenu("Exit");
 		mnExit.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));

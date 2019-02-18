@@ -21,7 +21,7 @@
 			<property name="javax.persistence.jdbc.password" value="admin123" />
 
 			<!-- <property name="hibernate.default_schema">users</property> -->
-
+			
 			<!-- Configuracoes de depth fetch for databse relations -->
 			<property name="hibernate.max_fetch_depth" value="3" />
 

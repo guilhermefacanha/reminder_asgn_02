@@ -52,7 +52,7 @@ public class Intro extends JFrame {
 			try {
 				UserDAO userDao = new UserDAO();
 				userDao.initSelec();
-				
+								
 				Login login = new Login();
 				if (!login.isVisible()) {
 					login.setVisible(true);

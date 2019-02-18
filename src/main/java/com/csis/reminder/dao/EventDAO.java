@@ -44,19 +44,19 @@ public class EventDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Event> getAllEvents(User user) {
 		EntityManager manager = Resources.getEntityManager();
-		List<Event> events = manager.createQuery("SELECT x FROM Event x").getResultList();
+		List<Event> events = manager.createQuery("SELECT x FROM Event x WHERE x ="+user.getId()).getResultList();
 		return events;
 	}
 	
 	/**
 	 * Method which retrieves all the events of a user, filtered by a course
 	 * @param user - provides the user which the program will load the events from
-	 * @return - returns a list of Event objects from that user
+	 * @return - returns a list of Event objects from that course
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Event> getAllEventsByCourse(User user, Course course) {
+	public List<Event> getAllEventsByCourse(Course course) {
 		EntityManager manager = Resources.getEntityManager();
-		List<Event> events = manager.createQuery("SELECT x FROM Event x WHERE Course = " + course).getResultList(); // Where course = ?
+		List<Event> events = manager.createQuery("SELECT x FROM Event x WHERE x = " + course.getId()).getResultList(); // Is this correct? Every course should have an individual ID so I believe this is accurate
 		return events;
 	}
 	
