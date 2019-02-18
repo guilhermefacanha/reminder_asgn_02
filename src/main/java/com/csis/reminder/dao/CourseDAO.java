@@ -9,8 +9,7 @@ import javax.persistence.NoResultException;
 
 import com.csis.reminder.dao.resources.Resources;
 import com.csis.reminder.entity.Course;
-import com.csis.reminder.session.UserSession;
-import com.csis.reminder.util.MD5Util;
+
 
 	/**
 	 * 
