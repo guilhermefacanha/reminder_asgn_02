@@ -34,7 +34,7 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	private UserType type;
 
-	// GETS and SETS
+	// getters and setters
 	public long getId() {
 		return id;
 	}
