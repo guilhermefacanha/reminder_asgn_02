@@ -29,16 +29,17 @@ public class Course
 		@ManyToOne
 		private User user;
 		private String courseName;
-		//private String description; // I believe we shouldn't require this attribute - jvws
-		//private String educationalInstitution ; // I believe we shouldn't require this attribute - jvws
-		//private String courseInstructor;
-		//private Date  startDate; // I believe we shouldn't require this attribute - jvws
-		//private Date  endDate; // I believe we shouldn't require this attribute - jvws
+	    private String courseInstructor;
+		private Date  startDate; 
+		private Date  endDate; 
 		
 		// getters and setters		
 		public long getId() {
 			return id;
 		}		
+
+			
+	
 
 		public void setId(long id) {
 			this.id = id;
@@ -62,8 +63,37 @@ public class Course
 			this.courseName = courseName;
 		}
 
-		
+		public String getCourseInstructor()
+		{
+			return courseInstructor;
+		}
 
+		public void setCourseInstructor(String courseInstructor)
+		{
+			this.courseInstructor = courseInstructor;
+		}
+
+		public Date getStartDate()
+		{
+			return startDate;
+		}
+
+		public void setStartDate(Date startDate)
+		{
+			this.startDate = startDate;
+		}
+
+		public Date getEndDate()
+		{
+			return endDate;
+		}
+
+		public void setEndDate(Date endDate)
+		{
+			this.endDate = endDate;
+		}		
+ 
+		
 	}
 
 	
