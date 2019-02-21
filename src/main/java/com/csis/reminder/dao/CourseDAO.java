@@ -40,33 +40,80 @@ import com.csis.reminder.entity.User;
 		}	
 		
 		/**
-		 * Method to insert (persist) a new user into our database
+		 * Method to insert (persist) a new course into our database
 		 * @param course {@link Course} - object which holds a course's data
 		 * 
 		 */	
 		public void addCourse(Course course) {
 			EntityManager manager = Resources.getEntityManager();
 			EntityTransaction transaction = manager.getTransaction(); 
-			transaction.begin();
-			manager.persist(course);
-			transaction.commit();
-		}
-
-	
-		/**
-		 * Method to check if a courseName  + educationalInstitution is already registered in database
-		 * @param courseName - {@link String} user email
-		 * @return {@link Boolean} if courseName  + educationalInstitution already exists on database
-		 */
-		public boolean courseNameInstitutionExists(String course, String institution) {
-			EntityManager manager = Resources.getEntityManager();
+			
 			try {
-				manager.createQuery("SELECT x FROM Course x WHERE x.courseName = :course AND x.educationalInstitution = :institution").setParameter(" course", course).setParameter(" Educational Institution", institution).getSingleResult();
-				return true;
-			} catch (NoResultException e) {
-				return false;
+			   transaction.begin();
+			   manager.persist(course);
+			   transaction.commit();
+			}
+			catch (RuntimeException e) {
+			    if (transaction != null) transaction.rollback();
+			    throw e; 
+			}
+			finally {
+			    manager.close();
 			}
 		}
+
+		/**
+		 * Method to delete a course into our database
+		 * @param courseID {@link CourseID} - object which holds a courseID  (key)
+	     */	
+		public void deleteCourse(Long courseID) {
+			EntityManager manager = Resources.getEntityManager();
+			EntityTransaction transaction = manager.getTransaction(); 
+			try {
+			   transaction.begin();
+			   Course deleteCourse = manager.find(Course.class, courseID);
+			   manager.remove(deleteCourse);
+			   transaction.commit();
+			}
+			catch (RuntimeException e) {
+			    if (transaction != null) transaction.rollback();
+			    throw e; 
+			}
+			finally {
+			    manager.close();
+			}
+			
+		}
+
+		/**
+		 * Method to update a course into our database
+		 * @param courseID {@link CourseID} - object which holds a courseID  (key)
+		 * @param updateCourse {@link updateCourse} - object which holds an updated course's data
+		 * 
+		 */	
+		public void updateCourse(Long courseID, Course updateCourse) {
+			EntityManager manager = Resources.getEntityManager();
+			EntityTransaction transaction = manager.getTransaction(); 
+			
+			try {
+		    	transaction.begin();
+			    Course foundCourse = manager.find(Course.class, courseID);
+				foundCourse.setCourseName(updateCourse.getCourseName());
+			    foundCourse.setCourseInstructor(updateCourse.getCourseInstructor());
+			    foundCourse.setStartDate(updateCourse.getStartDate());
+			    foundCourse.setEndDate(updateCourse.getEndDate());
+			     manager.merge(foundCourse);
+				transaction.commit();
+			}
+			catch (RuntimeException e) {
+			    if (transaction != null) transaction.rollback();
+			    throw e; 
+			}
+			finally {
+			    manager.close();
+			}
+		}
+		
  }
 
 	
