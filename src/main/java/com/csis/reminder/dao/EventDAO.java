@@ -61,5 +61,17 @@ public class EventDAO implements Serializable {
 	}
 	
 	
+	/**
+	 * Method which deletes an event, based on its unique id
+	 * @param courseID - the unique identifier for each course
+	 */
+	public void deleteEvent(Long courseID) {
+		EntityManager manager = Resources.getEntityManager();
+		manager.getTransaction().begin();
+		manager.createQuery("DELETE FROM Event x WHERE x.id = :id").setParameter("id", courseID).executeUpdate();
+		manager.getTransaction().commit();
+	}
+	
+	
 	
 }
