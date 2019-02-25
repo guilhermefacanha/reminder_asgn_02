@@ -33,6 +33,11 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	private UserType type;
+	
+	public Object[] getData() {
+		Object[] data = {id,email,firstName,lastName,type.toString(),enabled};
+		return data;
+	}
 
 	// getters and setters
 	public long getId() {

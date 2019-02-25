@@ -1,33 +1,26 @@
 package com.csis.reminder.view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
-import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
-import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import com.csis.reminder.dao.UserDAO;
 import com.csis.reminder.entity.User;
 import com.csis.reminder.entity.enumeration.UserType;
 import com.csis.reminder.session.UserSession;
 import com.csis.reminder.util.ScreenUtil;
-import javax.swing.JLabel;
-import javax.swing.UIManager;
-import java.awt.Font;
-
-import javax.swing.JList;
 
 /**
  * @author Reminder Group Class responsible for the main layout of the system
@@ -43,15 +36,14 @@ public class MainWindow extends JFrame {
 
 	private JLabel lblWelcome;
 	private JMenu mnUsers;
-	private JList lstUsers;
 	
-	private DefaultListModel dlm = new DefaultListModel();
 	private JMenu mnCourses;
 	private JMenuItem mntnListCourses;
 	private JMenuItem mntnAddCourses;
 	private JMenu mnEvents;
 	private JMenuItem mntnListEvents;
 	private JMenuItem mntnAddEvents;
+	private JDesktopPane desktopPane;
 
 	/**
 	 * Constructor to create the frame and call initialization methods
@@ -98,25 +90,20 @@ public class MainWindow extends JFrame {
 		// menu item for list users
 		mntmListUsers.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				lstUsers.setVisible(true);	
-				UserDAO userdao = new UserDAO();
-				List<User> users = userdao.getAllUsers();
-				String fmt = "%-20s %-40s %-40s %-80s";
-				dlm.addElement(String.format(fmt, "User ID", "First Name", "Last Name", "Email"));
-				for (User u: users)	{
-					dlm.addElement(String.format(fmt, u.getId(), u.getFirstName(), u.getLastName(), u.getEmail()));
-				}
-				lstUsers.setModel(dlm);					
+				UserListView listUserView = new UserListView(desktopPane);
+				desktopPane.add(listUserView);
+				listUserView.show();
 			}			
 		});
 		
 		// menu item add user action
-		mnUsers.addActionListener(new ActionListener() {
+		mntmNewUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			}			
-		});
-		
+				UserFormView formView = new UserFormView();
+				desktopPane.add(formView);
+				formView.show();
+			}
+		});		
 		// menu item list courses action
 		mntnListCourses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -204,33 +191,28 @@ public class MainWindow extends JFrame {
 		lblWelcome = new JLabel("Welcome, ");
 		lblWelcome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
-		lstUsers = new JList();
+		desktopPane = new JDesktopPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 706, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(39)
-							.addComponent(lstUsers, GroupLayout.PREFERRED_SIZE, 916, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(555, Short.MAX_VALUE))
+						.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 1298, Short.MAX_VALUE)
+						.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 706, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(lblWelcome)
-					.addGap(69)
-					.addComponent(lstUsers, GroupLayout.PREFERRED_SIZE, 549, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(148, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		
-		contentPane.setLayout(gl_contentPane); // Adds the table to the content panel
-		lstUsers.setModel(dlm);
-		lstUsers.setVisible(false);
+		contentPane.setLayout(gl_contentPane);
 		
 				
 		

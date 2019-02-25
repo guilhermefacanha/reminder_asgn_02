@@ -130,7 +130,7 @@ public class Register extends JFrame {
 					// attemps to add user to the db
 					try {
 						// calls method which adds the new user into the db via the userDAO
-						userDAO.addUser(user);
+						userDAO.saveUser(user);
 					} catch (Exception ex) {
 						throw new Exception("Please contact the administrator");
 					}

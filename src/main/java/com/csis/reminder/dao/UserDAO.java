@@ -43,11 +43,14 @@ public class UserDAO implements Serializable {
 	 * @param user {@link User} - object which holds a user's data
 	 * its information is gathered in the Register class
 	 */	
-	public void addUser(User user) {
+	public void saveUser(User user) {
 		EntityManager manager = Resources.getEntityManager();
 		EntityTransaction transaction = manager.getTransaction(); 
 		transaction.begin();
-		manager.persist(user);
+		if(user.getId()>0)
+			manager.merge(user);
+		else
+			manager.persist(user);
 		transaction.commit();
 	}
 
@@ -87,5 +90,17 @@ public class UserDAO implements Serializable {
 		} catch (NoResultException e) {
 			return false;
 		}
+	}
+
+	public User getUser(long userId) {
+		EntityManager manager = Resources.getEntityManager();
+		return manager.find(User.class, userId);
+	}
+
+	public void deleteUser(Long id) {
+		EntityManager manager = Resources.getEntityManager();
+		manager.getTransaction().begin();
+		manager.createQuery("DELETE FROM User x WHERE x.id = :id").setParameter("id", id).executeUpdate();
+		manager.getTransaction().commit();
 	}
 }
