@@ -94,6 +94,12 @@ public class Course
 		}		
  
 		
+			
+		public Object[] getData() {
+			Object[] data = {id,courseName,courseInstructor, startDate.toString(),endDate.toString()};
+			return data;
+		}
+		
 	}
 
 	

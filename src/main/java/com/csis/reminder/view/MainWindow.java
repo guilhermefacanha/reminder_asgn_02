@@ -107,14 +107,20 @@ public class MainWindow extends JFrame {
 		// menu item list courses action
 		mntnListCourses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				User user = UserSession.getUser();
+				CourseListView listCourseView = new CourseListView(desktopPane, user);
+				desktopPane.add(listCourseView);
+				listCourseView.show();
 			}			
 		});
 		
 		// menu item add a course action
 		mntnAddCourses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				User user = UserSession.getUser();
+				CourseFormView formView = new CourseFormView(user);
+				desktopPane.add(formView);
+				formView.show();
 			}			
 		});
 		
@@ -159,10 +165,10 @@ public class MainWindow extends JFrame {
 		mntmNewUser = new JMenuItem("New User");
 		mnUsers.add(mntmNewUser);
 		
-		mnCourses = new JMenu("Couses");
+		mnCourses = new JMenu("Courses");
 		menu.add(mnCourses);
 		
-		mntnListCourses = new JMenuItem("List Couses");
+		mntnListCourses = new JMenuItem("List Courses");
 		mnCourses.add(mntnListCourses);
 		
 		mntnAddCourses = new JMenuItem("Add a Course");

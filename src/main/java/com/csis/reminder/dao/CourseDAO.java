@@ -6,9 +6,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 import com.csis.reminder.dao.resources.Resources;
 import com.csis.reminder.entity.Course;
+import com.csis.reminder.entity.Event;
 import com.csis.reminder.entity.User;
 
 
@@ -35,22 +37,32 @@ import com.csis.reminder.entity.User;
 		@SuppressWarnings("unchecked")
 		public List<Course> getAllCourses(User user) {
 			EntityManager manager = Resources.getEntityManager();
-			List<Course> courses = manager.createQuery("SELECT x FROM Course x Where x = "+user.getId()).getResultList();
+	
+		     List<Course> courses = manager.createQuery("SELECT  x FROM Course x WHERE x.user.id ="+user.getId()).getResultList();
+		  
+		//	System.out.println("u " + user.getId());
+		//	for (int i=0; i<courses.size(); i++){
+		//		   System.out.println("Element "+i+courses.get(i));
+		//		}
+			
 			return courses;
 		}	
 		
 		/**
-		 * Method to insert (persist) a new course into our database
+		 * Method to insert (persist) a new course into our database or 
+		 * update (merge ) a course into our database
 		 * @param course {@link Course} - object which holds a course's data
 		 * 
 		 */	
-		public void addCourse(Course course) {
+		public void saveCourse(Course course) {
 			EntityManager manager = Resources.getEntityManager();
 			EntityTransaction transaction = manager.getTransaction(); 
 			
+		
 			try {
 			   transaction.begin();
-			   manager.persist(course);
+			   if (course.getId()>0)  manager.merge(course) ;
+			   else                   manager.persist(course);
 			   transaction.commit();
 			}
 			catch (RuntimeException e) {
@@ -66,14 +78,16 @@ import com.csis.reminder.entity.User;
 		 * Method to delete a course into our database
 		 * @param courseID {@link CourseID} - object which holds a courseID  (key)
 	     */	
-		public void deleteCourse(Long courseID) {
+		public void deleteCourse(Long id) {
 			EntityManager manager = Resources.getEntityManager();
 			EntityTransaction transaction = manager.getTransaction(); 
+			
+	        // tem que excluir os eventos  habilitar o cascade 
+			
 			try {
-			   transaction.begin();
-			   Course deleteCourse = manager.find(Course.class, courseID);
-			   manager.remove(deleteCourse);
-			   transaction.commit();
+				manager.getTransaction().begin();
+				manager.createQuery("DELETE FROM Course x WHERE x.id = :id").setParameter(" CourseID ", id).executeUpdate();
+				manager.getTransaction().commit();
 			}
 			catch (RuntimeException e) {
 			    if (transaction != null) transaction.rollback();
@@ -84,34 +98,11 @@ import com.csis.reminder.entity.User;
 			}
 			
 		}
-
-		/**
-		 * Method to update a course into our database
-		 * @param courseID {@link CourseID} - object which holds a courseID  (key)
-		 * @param updateCourse {@link updateCourse} - object which holds an updated course's data
-		 * 
-		 */	
-		public void updateCourse(Long courseID, Course updateCourse) {
+		
+        // get  courseID
+		public Course getCourse(long id) {
 			EntityManager manager = Resources.getEntityManager();
-			EntityTransaction transaction = manager.getTransaction(); 
-			
-			try {
-		    	transaction.begin();
-			    Course foundCourse = manager.find(Course.class, courseID);
-				foundCourse.setCourseName(updateCourse.getCourseName());
-			    foundCourse.setCourseInstructor(updateCourse.getCourseInstructor());
-			    foundCourse.setStartDate(updateCourse.getStartDate());
-			    foundCourse.setEndDate(updateCourse.getEndDate());
-			     manager.merge(foundCourse);
-				transaction.commit();
-			}
-			catch (RuntimeException e) {
-			    if (transaction != null) transaction.rollback();
-			    throw e; 
-			}
-			finally {
-			    manager.close();
-			}
+			return manager.find(Course.class, id);
 		}
 		
  }
