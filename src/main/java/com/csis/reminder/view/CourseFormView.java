@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 //	import javax.swing.JCheckBox;
 //	import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
@@ -19,6 +20,7 @@ import javax.swing.UIManager;
 import com.csis.reminder.dao.CourseDAO;
 import com.csis.reminder.entity.Course;
 import com.csis.reminder.entity.User;
+import com.csis.reminder.util.ScreenUtil;
 
 public class CourseFormView extends JInternalFrame {
 	private static final long serialVersionUID = -7030310764143744275L;
@@ -27,7 +29,8 @@ public class CourseFormView extends JInternalFrame {
 
 	private User user;
 	private Course course;
-	private Long courseid;
+	@SuppressWarnings("unused")
+	private Long courseid = null;
 	private JTextField txtCourseName;
 	private JTextField txtInstructor;
 	private JTextField txtSdate;
@@ -40,20 +43,19 @@ public class CourseFormView extends JInternalFrame {
 	private JButton btnSave;
 	// private JLabel lblPass;
 	// private JLabel lblPassConf;
-	
+
 	public CourseFormView() {
+		init();
+		config();
+		createActions();
 	}
 
 	/**
 	 * Create the frame.
 	 */
 	public CourseFormView(User user) {
-		this.courseid = null;
+		this();
 		this.user = user;
-
-		init();
-		config();
-		createActions();
 	}
 
 	/**
@@ -69,7 +71,6 @@ public class CourseFormView extends JInternalFrame {
 	private void loadCourse(long courseid) {
 		course = coursedao.getCourse(courseid);
 		if (course != null) {
-			System.out.println(" entrei loadcourse");
 			txtId.setVisible(true);
 			lbl2.setVisible(true);
 			lblFormTitle.setText("Edit course");
@@ -89,7 +90,6 @@ public class CourseFormView extends JInternalFrame {
 		setClosable(true);
 		setMaximizable(true);
 		setResizable(true);
-		System.out.println(" entrei config");
 
 	}
 
@@ -110,7 +110,7 @@ public class CourseFormView extends JInternalFrame {
 
 					Course course = new Course();
 					DateFormat formatter;
-					formatter = new SimpleDateFormat("dd-MMM-yy");
+					formatter = new SimpleDateFormat("MM/dd/yyyy");
 
 					course.setUser(user);
 					course.setCourseName(txtCourseName.getText());
@@ -146,16 +146,15 @@ public class CourseFormView extends JInternalFrame {
 
 	private void init() {
 
-		System.out.println(" entrei init");
-		setBounds(100, 100, 317, 423);
+		setBounds(100, 100, 322, 273);
 
 		btnSave = new JButton("Save");
-		btnSave.setBounds(118, 311, 150, 20);
+		btnSave.setBounds(118, 215, 150, 20);
 		btnSave.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnSave.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 
 		lblFormTitle = new JLabel("New Course");
-		lblFormTitle.setBounds(0, 4, 119, 27);
+		lblFormTitle.setBounds(10, 4, 119, 27);
 		lblFormTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		lbl2 = new JLabel(" Id:");
@@ -164,7 +163,7 @@ public class CourseFormView extends JInternalFrame {
 		lbl2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 
 		txtId = new JTextField();
-		txtId.setBounds(118, 39, 150, 20);
+		txtId.setBounds(150, 39, 150, 20);
 		txtId.setVisible(false);
 		txtId.setEditable(false);
 		txtId.setColumns(10);
@@ -178,14 +177,13 @@ public class CourseFormView extends JInternalFrame {
 		getContentPane().add(lbl2);
 		getContentPane().add(txtId);
 
-
 		JLabel label = new JLabel("*Course Name:");
 		label.setBounds(10, 70, 108, 20);
 		label.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(label);
 
 		txtCourseName = new JTextField();
-		txtCourseName.setBounds(118, 70, 150, 20);
+		txtCourseName.setBounds(150, 70, 150, 20);
 		txtCourseName.setColumns(10);
 		getContentPane().add(txtCourseName);
 
@@ -195,34 +193,33 @@ public class CourseFormView extends JInternalFrame {
 		getContentPane().add(label_1);
 
 		txtInstructor = new JTextField();
-		txtInstructor.setBounds(118, 100, 150, 20);
+		txtInstructor.setBounds(150, 100, 150, 20);
 		txtInstructor.setColumns(10);
 		getContentPane().add(txtInstructor);
 		// getContentPane().add(label_2);
 
-		JLabel label_2 = new JLabel("Start Date");
-		label_2.setBounds(10, 130, 108, 20);
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(label_2);
+		JLabel lblStartDatemmddyyyy = new JLabel("Start Date (MM/dd/yyyy)");
+		lblStartDatemmddyyyy.setBounds(10, 130, 140, 20);
+		lblStartDatemmddyyyy.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblStartDatemmddyyyy);
 
-		txtSdate = new JTextField();
-		txtSdate.setBounds(118, 130, 150, 20);
+		txtSdate = new JFormattedTextField(ScreenUtil.createFormatter("##/##/####"));
+		txtSdate.setBounds(150, 130, 150, 20);
 		txtSdate.setColumns(10);
 		getContentPane().add(txtSdate);
 
-		JLabel label_3 = new JLabel("End Date");
-		label_3.setBounds(10, 160, 108, 20);
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(label_3);
+		JLabel lblEndDatemmddyyyy = new JLabel("End Date  (MM/dd/yyyy)");
+		lblEndDatemmddyyyy.setBounds(10, 160, 140, 20);
+		lblEndDatemmddyyyy.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblEndDatemmddyyyy);
 
-		txtEdate = new JTextField();
-		txtEdate.setBounds(118, 160, 150, 20);
+		txtEdate = new JFormattedTextField(ScreenUtil.createFormatter("##/##/####"));
+		txtEdate.setBounds(150, 160, 150, 20);
 		txtEdate.setColumns(10);
 		getContentPane().add(txtEdate);
-		
 
 		JLabel label_4 = new JLabel("* Required fields");
-		label_4.setBounds(10, 287, 108, 20);
+		label_4.setBounds(10, 191, 108, 20);
 		label_4.setFont(new Font("Tahoma", Font.BOLD, 10));
 		getContentPane().add(label_4);
 

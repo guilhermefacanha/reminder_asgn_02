@@ -127,14 +127,20 @@ public class MainWindow extends JFrame {
 		// menu item list events action
 		mntnListEvents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				User user = UserSession.getUser();
+				EventListView formView = new EventListView(desktopPane, user);
+				desktopPane.add(formView);
+				formView.show();
 			}			
 		});
 		
 		// menu item add an event action
 		mntnAddEvents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				User user = UserSession.getUser();
+				EventFormView formView = new EventFormView(user);
+				desktopPane.add(formView);
+				formView.show();
 			}			
 		});
 		

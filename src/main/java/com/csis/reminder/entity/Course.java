@@ -1,5 +1,6 @@
 package com.csis.reminder.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.csis.reminder.util.ScreenUtil;
 
 @Entity
 @Table
@@ -31,7 +34,7 @@ public class Course {
 
 	public String getStartDateStr() {
 		try {
-			return startDate.toString();
+			return new SimpleDateFormat(ScreenUtil.DATE_FORMAT).format(startDate);
 		} catch (Exception e) {
 			return "";
 		}
@@ -39,7 +42,7 @@ public class Course {
 
 	public String getEndDateStr() {
 		try {
-			return endDate.toString();
+			return new SimpleDateFormat(ScreenUtil.DATE_FORMAT).format(endDate);
 		} catch (Exception e) {
 			return "";
 		}
@@ -49,54 +52,59 @@ public class Course {
 		Object[] data = { id, courseName, courseInstructor, getStartDateStr(), getEndDateStr() };
 		return data;
 	}
-	
+
+	@Override
+	public String toString() {
+		return courseName;
+	}
+
 	// getters and setters
-		public long getId() {
-			return id;
-		}
+	public long getId() {
+		return id;
+	}
 
-		public void setId(long id) {
-			this.id = id;
-		}
+	public void setId(long id) {
+		this.id = id;
+	}
 
-		public User getUser() {
-			return user;
-		}
+	public User getUser() {
+		return user;
+	}
 
-		public void setUser(User user) {
-			this.user = user;
-		}
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-		public String getCourseName() {
-			return courseName;
-		}
+	public String getCourseName() {
+		return courseName;
+	}
 
-		public void setCourseName(String courseName) {
-			this.courseName = courseName;
-		}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
 
-		public String getCourseInstructor() {
-			return courseInstructor;
-		}
+	public String getCourseInstructor() {
+		return courseInstructor;
+	}
 
-		public void setCourseInstructor(String courseInstructor) {
-			this.courseInstructor = courseInstructor;
-		}
+	public void setCourseInstructor(String courseInstructor) {
+		this.courseInstructor = courseInstructor;
+	}
 
-		public Date getStartDate() {
-			return startDate;
-		}
+	public Date getStartDate() {
+		return startDate;
+	}
 
-		public void setStartDate(Date startDate) {
-			this.startDate = startDate;
-		}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
 
-		public Date getEndDate() {
-			return endDate;
-		}
+	public Date getEndDate() {
+		return endDate;
+	}
 
-		public void setEndDate(Date endDate) {
-			this.endDate = endDate;
-		}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 
 }

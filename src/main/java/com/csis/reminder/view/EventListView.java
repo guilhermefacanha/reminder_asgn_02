@@ -18,20 +18,20 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.csis.reminder.dao.CourseDAO;
-import com.csis.reminder.entity.Course;
+import com.csis.reminder.dao.EventDAO;
+import com.csis.reminder.entity.Event;
 import com.csis.reminder.entity.User;
 
 @SuppressWarnings("rawtypes")
 
-public class CourseListView extends JInternalFrame {
+public class EventListView extends JInternalFrame {
 	private static final long serialVersionUID = -5005775842044227857L;
 
-	private CourseDAO coursedao = new CourseDAO();
+	private EventDAO eventDAO = new EventDAO();
 
 	private JDesktopPane desktop;
 	private DefaultTableModel dtm;
-	private JTable tbCourses;
+	private JTable tbEvents;
 	private JScrollPane scrollPane;
 	private JButton btnNewCourse;
 	private JButton btnEditCourse;
@@ -41,7 +41,7 @@ public class CourseListView extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CourseListView(JDesktopPane desktop, User user) {
+	public EventListView(JDesktopPane desktop, User user) {
 		this.desktop = desktop;
 		this.user = user;
 
@@ -53,22 +53,22 @@ public class CourseListView extends JInternalFrame {
 	}
 
 	private void config() {
-		setTitle("Course List");
+		setTitle("Event List");
 		setClosable(true);
 		setMaximizable(true);
 		setResizable(true);
 
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-		tbCourses.setDefaultRenderer(String.class, centerRenderer);
-		tbCourses.setDefaultRenderer(Long.class, centerRenderer);
+		tbEvents.setDefaultRenderer(String.class, centerRenderer);
+		tbEvents.setDefaultRenderer(Long.class, centerRenderer);
 	}
 
 	private void loadCourses() {
-		dtm = (DefaultTableModel) tbCourses.getModel();
-		List<Course> courses = coursedao.getAllCourses(user);
-		for (Course c : courses) {
-			dtm.addRow(c.getData());
+		dtm = (DefaultTableModel) tbEvents.getModel();
+		List<Event> events = eventDAO.getAllEvents(user);
+		for (Event event : events) {
+			dtm.addRow(event.getData());
 		}
 
 	}
@@ -78,7 +78,7 @@ public class CourseListView extends JInternalFrame {
 		btnNewCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// create a new Course form window to show
-				CourseFormView form = new CourseFormView(user);
+				EventFormView form = new EventFormView(user);
 				desktop.add(form);
 				form.show();
 
@@ -90,10 +90,10 @@ public class CourseListView extends JInternalFrame {
 		// button edit course action
 		btnEditCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selectedRow = tbCourses.getSelectedRow();
+				int selectedRow = tbEvents.getSelectedRow();
 				if (selectedRow > -1) {
-					Long id = (Long) tbCourses.getValueAt(selectedRow, 0);
-					CourseFormView form = new CourseFormView(id, user);
+					Long id = (Long) tbEvents.getValueAt(selectedRow, 0);
+					EventFormView form = new EventFormView(id, user);
 					desktop.add(form);
 					form.show();
 
@@ -108,14 +108,14 @@ public class CourseListView extends JInternalFrame {
 		// button delete course action
 		btnDeleteCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selectedRow = tbCourses.getSelectedRow();
+				int selectedRow = tbEvents.getSelectedRow();
 				if (selectedRow > -1) {
-					Long id = (Long) tbCourses.getValueAt(selectedRow, 0);
+					Long id = (Long) tbEvents.getValueAt(selectedRow, 0);
 					int confirm = JOptionPane.showConfirmDialog(getContentPane(),
 							"Confirm delete Course with id " + id + " ?");
 					if (confirm == 0) {
 						try {
-							coursedao.deleteCourse(id);
+							eventDAO.deleteEvent(id);
 							dtm.removeRow(selectedRow);
 							JOptionPane.showMessageDialog(getContentPane(), "Course deleted", "Info",
 									JOptionPane.INFORMATION_MESSAGE);
@@ -144,38 +144,27 @@ public class CourseListView extends JInternalFrame {
 		btnDeleteCourse = new JButton("Delete");
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup().addContainerGap()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(btnNewCourse)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnEditCourse, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnDeleteCourse)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewCourse)
-						.addComponent(btnEditCourse)
-						.addComponent(btnDeleteCourse))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-					.addGap(9))
-		);
+						.addGroup(groupLayout.createSequentialGroup().addComponent(btnNewCourse)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnEditCourse, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnDeleteCourse)))
+				.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnNewCourse)
+								.addComponent(btnEditCourse).addComponent(btnDeleteCourse))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE).addGap(9)));
 
-		tbCourses = new JTable();
-		tbCourses.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(tbCourses);
-		tbCourses.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Id", "Course Name", "Instructor", "Start Date", "End Date" }) {
+		tbEvents = new JTable();
+		tbEvents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		scrollPane.setViewportView(tbEvents);
+		tbEvents.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Id", "Course Name", "Event Type", "Date", "Event Name", "Description" }) {
 			Class[] columnTypes = new Class[] { Long.class, String.class, String.class, String.class, String.class,
 					String.class };
 
@@ -190,7 +179,7 @@ public class CourseListView extends JInternalFrame {
 				return columnEditables[column];
 			}
 		});
-		tbCourses.getColumnModel().getColumn(0).setResizable(true);
+		tbEvents.getColumnModel().getColumn(0).setResizable(true);
 		getContentPane().setLayout(groupLayout);
 	}
 }
