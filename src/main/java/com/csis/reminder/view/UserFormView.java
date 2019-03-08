@@ -106,7 +106,7 @@ public class UserFormView extends JInternalFrame {
 							if (!password.equals(confirmPassword))
 								throw new Exception("Input passwords do not match!");
 
-							user.setPassword(MD5Util.getMd5(password));
+							user.setPassword(password);
 						}
 					}
 					// new user mode
@@ -125,7 +125,7 @@ public class UserFormView extends JInternalFrame {
 							throw new Exception("Email already registered!");
 
 						user = new User();
-						user.setPassword(MD5Util.getMd5(password));
+						user.setPassword(password);
 					}
 
 					user.setEmail(txtEmail.getText());
