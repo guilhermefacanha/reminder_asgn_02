@@ -73,7 +73,7 @@ public class UserListView extends JInternalFrame {
 		btnNewUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// create a new user form window to show
-				UserFormView form = new UserFormView();
+				UserFormView form = new UserFormView(desktop);
 				desktop.add(form);
 				form.show();
 
@@ -88,7 +88,7 @@ public class UserListView extends JInternalFrame {
 				int selectedRow = tbUsers.getSelectedRow();
 				if (selectedRow > -1) {
 					Long id = (Long) tbUsers.getValueAt(selectedRow, 0);
-					UserFormView form = new UserFormView(id);
+					UserFormView form = new UserFormView(id, desktop);
 					desktop.add(form);
 					form.show();
 					

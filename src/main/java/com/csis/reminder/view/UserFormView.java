@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,6 +19,8 @@ import com.csis.reminder.dao.UserDAO;
 import com.csis.reminder.entity.User;
 import com.csis.reminder.entity.enumeration.UserType;
 import com.csis.reminder.util.MD5Util;
+import java.awt.SystemColor;
+import javax.swing.JSeparator;
 
 public class UserFormView extends JInternalFrame {
 
@@ -40,10 +43,22 @@ public class UserFormView extends JInternalFrame {
 	private JLabel lblPass;
 	private JLabel lblPassConf;
 
+	private JDesktopPane desktop;
+	private JButton btnGoBack;
+	
 	/**
-	 * Create the frame.
+	 * Default Constructor
 	 */
 	public UserFormView() {
+	}
+
+	/**
+	 * Create the frame.
+	 * @param desktop 
+	 * @wbp.parser.constructor
+	 */
+	public UserFormView(JDesktopPane desktop) {
+		this.desktop = desktop;
 		init();
 		config();
 		createActions();
@@ -53,8 +68,8 @@ public class UserFormView extends JInternalFrame {
 	 * @param userId
 	 *            - user id to be loaded and start the edit form
 	 */
-	public UserFormView(long userId) {
-		this();
+	public UserFormView(long userId, JDesktopPane desktop) {
+		this(desktop);
 		loadUser(userId);
 	}
 
@@ -86,7 +101,23 @@ public class UserFormView extends JInternalFrame {
 		userTypeCmb.addItem(UserType.ADMIN);
 	}
 
+	private void goToListView() {
+		UserListView listUserView = new UserListView(desktop);
+		desktop.add(listUserView);
+		listUserView.show();
+		
+		// close current window
+		dispose();
+	}
+
 	private void createActions() {
+		
+		//btnGoBack Action
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				goToListView();
+			}
+		});
 
 		// btn save user action
 		btnSave.addActionListener(new ActionListener() {
@@ -138,6 +169,8 @@ public class UserFormView extends JInternalFrame {
 
 					JOptionPane.showMessageDialog(getContentPane(), "User " + (edit ? "Edited!" : "Added!"), "Info",
 							JOptionPane.INFORMATION_MESSAGE);
+					
+					goToListView();
 
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(getContentPane(), e2.getMessage(), "Error",
@@ -172,7 +205,7 @@ public class UserFormView extends JInternalFrame {
 		btnSave.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 
 		lblFormTitle = new JLabel("New User");
-		lblFormTitle.setBounds(0, 4, 119, 27);
+		lblFormTitle.setBounds(10, 4, 119, 27);
 		lblFormTitle.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		lbl2 = new JLabel(" Id:");
@@ -262,5 +295,15 @@ public class UserFormView extends JInternalFrame {
 		label_8.setBounds(0, 354, 150, 35);
 		getContentPane().add(label_8);
 		getContentPane().add(btnSave);
+		
+		btnGoBack = new JButton("Go Back to List");
+		btnGoBack.setBackground(SystemColor.info);
+		
+		btnGoBack.setBounds(10, 354, 150, 23);
+		getContentPane().add(btnGoBack);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 346, 281, 9);
+		getContentPane().add(separator);
 	}
 }

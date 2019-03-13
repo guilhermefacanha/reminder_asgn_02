@@ -99,7 +99,7 @@ public class MainWindow extends JFrame {
 		// menu item add user action
 		mntmNewUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserFormView formView = new UserFormView();
+				UserFormView formView = new UserFormView(desktopPane);
 				desktopPane.add(formView);
 				formView.show();
 			}
