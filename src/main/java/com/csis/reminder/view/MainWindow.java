@@ -118,7 +118,7 @@ public class MainWindow extends JFrame {
 		mntnAddCourses.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				User user = UserSession.getUser();
-				CourseFormView formView = new CourseFormView(user);
+				CourseFormView formView = new CourseFormView(user,desktopPane);
 				desktopPane.add(formView);
 				formView.show();
 			}			
@@ -138,7 +138,7 @@ public class MainWindow extends JFrame {
 		mntnAddEvents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				User user = UserSession.getUser();
-				EventFormView formView = new EventFormView(user);
+				EventFormView formView = new EventFormView(user,desktopPane);
 				desktopPane.add(formView);
 				formView.show();
 			}			

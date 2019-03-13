@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 //	import javax.swing.JCheckBox;
 //	import javax.swing.JComboBox;
@@ -21,6 +22,8 @@ import com.csis.reminder.dao.CourseDAO;
 import com.csis.reminder.entity.Course;
 import com.csis.reminder.entity.User;
 import com.csis.reminder.util.ScreenUtil;
+import java.awt.SystemColor;
+import javax.swing.JSeparator;
 
 public class CourseFormView extends JInternalFrame {
 	private static final long serialVersionUID = -7030310764143744275L;
@@ -37,24 +40,30 @@ public class CourseFormView extends JInternalFrame {
 	private JTextField txtEdate;
 	private JTextField txtId;
 	private JLabel lbl2;
-	// private JComboBox<UserType> userTypeCmb;
-	// private JCheckBox chkEnable;
 	private JLabel lblFormTitle;
 	private JButton btnSave;
-	// private JLabel lblPass;
-	// private JLabel lblPassConf;
+
+	private JDesktopPane desktop;
+	private JButton btnGoBack;
+	private JSeparator separator;
 
 	public CourseFormView() {
 		init();
 		config();
 		createActions();
+
+	}
+
+	public CourseFormView(JDesktopPane desktop) {
+		this();
+		this.desktop = desktop;
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public CourseFormView(User user) {
-		this();
+	public CourseFormView(User user, JDesktopPane desktop) {
+		this(desktop);
 		this.user = user;
 	}
 
@@ -62,8 +71,8 @@ public class CourseFormView extends JInternalFrame {
 	 * @param courseId,
 	 *            user - courseID and User to be loaded and start the edit form
 	 */
-	public CourseFormView(long courseId, User user) {
-		this(user);
+	public CourseFormView(long courseId, User user, JDesktopPane desktop) {
+		this(user, desktop);
 		this.courseid = courseId;
 		loadCourse(courseId);
 	}
@@ -93,7 +102,26 @@ public class CourseFormView extends JInternalFrame {
 
 	}
 
+	/**
+	 * Method to redirect the window to list view
+	 */
+	private void goToListView() {
+		CourseListView courseListView = new CourseListView(desktop, user);
+		desktop.add(courseListView);
+		courseListView.show();
+
+		// close current window
+		dispose();
+	}
+
 	private void createActions() {
+
+		// btn goback action
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				goToListView();
+			}
+		});
 
 		// btn save course action
 		btnSave.addActionListener(new ActionListener() {
@@ -105,13 +133,13 @@ public class CourseFormView extends JInternalFrame {
 					// course in edit mode
 					if (course != null && course.getId() > 0) {
 						edit = true;
-
 					}
 
-					Course course = new Course();
-					DateFormat formatter;
-					formatter = new SimpleDateFormat("MM/dd/yyyy");
+					DateFormat formatter = new SimpleDateFormat(ScreenUtil.DATE_FORMAT);
 
+					if(course == null)
+						course = new Course();
+					
 					course.setUser(user);
 					course.setCourseName(txtCourseName.getText());
 					if (!txtInstructor.getText().isEmpty())
@@ -128,6 +156,8 @@ public class CourseFormView extends JInternalFrame {
 					JOptionPane.showMessageDialog(getContentPane(), "Course " + (edit ? "Edited!" : "Added!"), "Info",
 							JOptionPane.INFORMATION_MESSAGE);
 
+					goToListView();
+
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(getContentPane(), e2.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -137,16 +167,19 @@ public class CourseFormView extends JInternalFrame {
 	}
 
 	private void validateForm() throws Exception {
-
 		// check if form is validated
 		if (txtCourseName.getText().isEmpty())
 			throw new Exception("Please fill Course Name");
+		if(!txtSdate.getText().isEmpty() && !ScreenUtil.isDateValid(txtSdate.getText(), ScreenUtil.DATE_FORMAT))
+			throw new Exception("Invalid input for Start Date: "+txtSdate.getText());
+		if(!txtEdate.getText().isEmpty() && !ScreenUtil.isDateValid(txtEdate.getText(), ScreenUtil.DATE_FORMAT))
+			throw new Exception("Invalid input for End Date: "+txtEdate.getText());
 
 	}
 
 	private void init() {
 
-		setBounds(100, 100, 322, 273);
+		setBounds(100, 100, 323, 324);
 
 		btnSave = new JButton("Save");
 		btnSave.setBounds(118, 215, 150, 20);
@@ -227,6 +260,15 @@ public class CourseFormView extends JInternalFrame {
 		label_8.setBounds(0, 354, 150, 35);
 		getContentPane().add(label_8);
 		getContentPane().add(btnSave);
-	}
 
+		btnGoBack = new JButton("Go Back to List");
+
+		btnGoBack.setBackground(SystemColor.info);
+		btnGoBack.setBounds(10, 261, 150, 23);
+		getContentPane().add(btnGoBack);
+
+		separator = new JSeparator();
+		separator.setBounds(10, 253, 281, 9);
+		getContentPane().add(separator);
+	}
 }

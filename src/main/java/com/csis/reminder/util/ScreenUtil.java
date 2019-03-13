@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.text.SimpleDateFormat;
 
 import javax.swing.text.MaskFormatter;
 
@@ -50,6 +51,17 @@ public class ScreenUtil {
 	        System.exit(-1);
 	    }
 	    return formatter;
+	}
+
+	public static boolean isDateValid(String text, String dateTimeFormat) {
+		try {
+			SimpleDateFormat format = new SimpleDateFormat(dateTimeFormat);
+			format.setLenient(false);
+			format.parse(text);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 }

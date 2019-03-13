@@ -78,7 +78,7 @@ public class CourseListView extends JInternalFrame {
 		btnNewCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// create a new Course form window to show
-				CourseFormView form = new CourseFormView(user);
+				CourseFormView form = new CourseFormView(user,desktop);
 				desktop.add(form);
 				form.show();
 
@@ -93,7 +93,7 @@ public class CourseListView extends JInternalFrame {
 				int selectedRow = tbCourses.getSelectedRow();
 				if (selectedRow > -1) {
 					Long id = (Long) tbCourses.getValueAt(selectedRow, 0);
-					CourseFormView form = new CourseFormView(id, user);
+					CourseFormView form = new CourseFormView(id, user,desktop);
 					desktop.add(form);
 					form.show();
 

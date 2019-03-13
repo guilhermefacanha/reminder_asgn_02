@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDesktopPane;
 import javax.swing.JFormattedTextField;
 //	import javax.swing.JCheckBox;
 //	import javax.swing.JComboBox;
@@ -26,6 +27,8 @@ import com.csis.reminder.entity.Event;
 import com.csis.reminder.entity.User;
 import com.csis.reminder.entity.enumeration.EventType;
 import com.csis.reminder.util.ScreenUtil;
+import java.awt.SystemColor;
+import javax.swing.JSeparator;
 
 public class EventFormView extends JInternalFrame {
 	private static final long serialVersionUID = -7030310764143744275L;
@@ -50,17 +53,26 @@ public class EventFormView extends JInternalFrame {
 	private JComboBox<Course> cmbCourse;
 	private JComboBox<EventType> cmbEventType;
 
+	private JDesktopPane desktop;
+	private JButton btnGoBack;
+	private JSeparator separator;
+
 	public EventFormView() {
 		init();
 		config();
 		createActions();
 	}
 
+	public EventFormView(JDesktopPane desktop) {
+		this();
+		this.desktop = desktop;
+	}
+
 	/**
 	 * Create the frame.
 	 */
-	public EventFormView(User user) {
-		this();
+	public EventFormView(User user, JDesktopPane desktop) {
+		this(desktop);
 		this.user = user;
 		this.userCourses = coursedao.getAllCourses(this.user);
 		loadCombos();
@@ -70,8 +82,8 @@ public class EventFormView extends JInternalFrame {
 	 * @param courseId,
 	 *            user - courseID and User to be loaded and start the edit form
 	 */
-	public EventFormView(long courseId, User user) {
-		this(user);
+	public EventFormView(long courseId, User user, JDesktopPane desktop) {
+		this(user, desktop);
 		this.courseid = courseId;
 		loadCourse(courseId);
 	}
@@ -113,7 +125,26 @@ public class EventFormView extends JInternalFrame {
 
 	}
 
+	/**
+	 * Method to redirect the window to list view
+	 */
+	private void goToListView() {
+		EventListView eventListView = new EventListView(desktop, user);
+		desktop.add(eventListView);
+		eventListView.show();
+
+		// close current window
+		dispose();
+	}
+
 	private void createActions() {
+
+		// btn goback action
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				goToListView();
+			}
+		});
 
 		// btn save course action
 		btnSave.addActionListener(new ActionListener() {
@@ -125,14 +156,13 @@ public class EventFormView extends JInternalFrame {
 					// course in edit mode
 					if (event != null && event.getId() > 0) {
 						edit = true;
-
+					} else {
+						event = new Event();
 					}
 
-					event = new Event();
 					DateFormat formatter = new SimpleDateFormat(ScreenUtil.DATE_TIME_FORMAT);
-					if (!txtDate.getText().isEmpty())
-						event.setDate(formatter.parse(txtDate.getText()));
-					
+					event.setDate(formatter.parse(txtDate.getText()));
+
 					event.setEventName(txtEventName.getText());
 					event.setDescription(txtDescription.getText());
 					event.setCourse((Course) cmbCourse.getSelectedItem());
@@ -141,6 +171,8 @@ public class EventFormView extends JInternalFrame {
 
 					JOptionPane.showMessageDialog(getContentPane(), "Course " + (edit ? "Edited!" : "Added!"), "Info",
 							JOptionPane.INFORMATION_MESSAGE);
+
+					goToListView();
 
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(getContentPane(), e2.getMessage(), "Error",
@@ -157,12 +189,16 @@ public class EventFormView extends JInternalFrame {
 			throw new Exception("Please fill Event Name");
 		if (txtDate.getText().isEmpty())
 			throw new Exception("Please fill Event Date");
+		else {
+			if (!ScreenUtil.isDateValid(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT))
+				throw new Exception("Invalid input Date: " + txtDate.getText());
+		}
 
 	}
 
 	private void init() {
 
-		setBounds(100, 100, 346, 318);
+		setBounds(100, 100, 346, 351);
 
 		btnSave = new JButton("Save");
 		btnSave.setBounds(170, 243, 150, 20);
@@ -251,5 +287,15 @@ public class EventFormView extends JInternalFrame {
 		txtDescription.setBounds(170, 192, 150, 20);
 		getContentPane().add(txtDescription);
 		txtDescription.setColumns(10);
+
+		btnGoBack = new JButton("Go Back to List");
+
+		btnGoBack.setBackground(SystemColor.info);
+		btnGoBack.setBounds(10, 282, 150, 23);
+		getContentPane().add(btnGoBack);
+
+		separator = new JSeparator();
+		separator.setBounds(10, 274, 310, 9);
+		getContentPane().add(separator);
 	}
 }
