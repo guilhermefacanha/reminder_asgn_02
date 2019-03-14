@@ -47,6 +47,9 @@ public class CourseFormView extends JInternalFrame {
 	private JButton btnGoBack;
 	private JSeparator separator;
 
+	/**
+	 * Default Constructor
+	 */
 	public CourseFormView() {
 		init();
 		config();
@@ -54,6 +57,10 @@ public class CourseFormView extends JInternalFrame {
 
 	}
 
+	/**
+	 * Create the frame.
+	 * @param desktop - main window desktop object
+	 */
 	public CourseFormView(JDesktopPane desktop) {
 		this();
 		this.desktop = desktop;
@@ -61,6 +68,8 @@ public class CourseFormView extends JInternalFrame {
 
 	/**
 	 * Create the frame.
+	 * @param user - logged user
+	 * @param desktop - main window desktop object
 	 */
 	public CourseFormView(User user, JDesktopPane desktop) {
 		this(desktop);
@@ -68,8 +77,10 @@ public class CourseFormView extends JInternalFrame {
 	}
 
 	/**
-	 * @param courseId,
-	 *            user - courseID and User to be loaded and start the edit form
+	 * Create the frame.
+	 * @param courseId - course id related to event
+	 * @param user - logged user
+	 * @param desktop - main window desktop object
 	 */
 	public CourseFormView(long courseId, User user, JDesktopPane desktop) {
 		this(user, desktop);

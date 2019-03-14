@@ -58,6 +58,7 @@ public class Register extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param login - {@link Login} object
 	 */
 	public Register(Login login) {
 		this.login = login;

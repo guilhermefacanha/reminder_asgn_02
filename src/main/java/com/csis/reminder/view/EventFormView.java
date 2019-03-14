@@ -57,12 +57,19 @@ public class EventFormView extends JInternalFrame {
 	private JButton btnGoBack;
 	private JSeparator separator;
 
+	/**
+	 * Default Constructor
+	 */
 	public EventFormView() {
 		init();
 		config();
 		createActions();
 	}
 
+	/**
+	 * Create the frame.
+	 * @param desktop - main window desktop object
+	 */
 	public EventFormView(JDesktopPane desktop) {
 		this();
 		this.desktop = desktop;
@@ -70,6 +77,8 @@ public class EventFormView extends JInternalFrame {
 
 	/**
 	 * Create the frame.
+	 * @param user - logged user
+	 * @param desktop - main window desktop object
 	 */
 	public EventFormView(User user, JDesktopPane desktop) {
 		this(desktop);
@@ -79,8 +88,10 @@ public class EventFormView extends JInternalFrame {
 	}
 
 	/**
-	 * @param courseId,
-	 *            user - courseID and User to be loaded and start the edit form
+	 * Constructor
+	 * @param courseId - course id related to event
+	 * @param user - logged user
+	 * @param desktop - main window desktop object
 	 */
 	public EventFormView(long courseId, User user, JDesktopPane desktop) {
 		this(user, desktop);
@@ -98,6 +109,10 @@ public class EventFormView extends JInternalFrame {
 		}
 	}
 
+	/**
+	 * Load the courses for an event
+	 * @param eventId - event id
+	 */
 	private void loadCourse(long eventId) {
 		event = eventDAO.getEvent(eventId);
 

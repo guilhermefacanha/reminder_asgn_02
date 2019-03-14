@@ -40,6 +40,8 @@ public class CourseListView extends JInternalFrame {
 
 	/**
 	 * Create the frame.
+	 * @param desktop - main window desktop object
+	 * @param user - logged user
 	 */
 	public CourseListView(JDesktopPane desktop, User user) {
 		this.desktop = desktop;

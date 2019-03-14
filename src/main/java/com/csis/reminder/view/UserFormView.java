@@ -55,7 +55,6 @@ public class UserFormView extends JInternalFrame {
 	/**
 	 * Create the frame.
 	 * @param desktop 
-	 * @wbp.parser.constructor
 	 */
 	public UserFormView(JDesktopPane desktop) {
 		this.desktop = desktop;
