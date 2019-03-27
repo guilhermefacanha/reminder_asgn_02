@@ -19,7 +19,7 @@ import com.csis.reminder.entity.User;
  *         Access Object it contains the methods which allows users to perform
  *         CRUD operations on their notifications
  */
-public class notificationDAO implements Serializable
+public class NotificationDAO implements Serializable
 {
 	private static final long serialVersionUID = 5584599198950863626L;
 	

@@ -43,6 +43,10 @@ public class MainWindow extends JFrame {
 	private JMenu mnEvents;
 	private JMenuItem mntnListEvents;
 	private JMenuItem mntnAddEvents;
+	
+	private JMenu mnNotifications;
+	private JMenuItem mntnListNotifications;
+	private JMenuItem mntnAddNotifications;
 	private JDesktopPane desktopPane;
 
 	/**
@@ -144,6 +148,15 @@ public class MainWindow extends JFrame {
 			}			
 		});
 		
+		// menu item add an notification action
+		mntnAddNotifications.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				User user = UserSession.getUser();
+				NotificationFormView formView = new NotificationFormView(user,desktopPane);
+				desktopPane.add(formView);
+				formView.show();
+			}			
+		});
 		
 		
 		
@@ -189,6 +202,17 @@ public class MainWindow extends JFrame {
 		mntnAddEvents = new JMenuItem("Add an Event");
 		mnEvents.add(mntnAddEvents);
 
+		
+		mnNotifications = new JMenu("Notifications");
+		menu.add(mnNotifications);
+		
+		mntnListNotifications = new JMenuItem("List Notifications");
+		mnNotifications.add(mntnListNotifications);
+		
+		mntnAddNotifications = new JMenuItem("Add a Notification");
+		mnNotifications.add(mntnAddNotifications); 
+		
+		
 		JMenu mnExit = new JMenu("Exit");
 		mnExit.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
 		menu.add(mnExit);

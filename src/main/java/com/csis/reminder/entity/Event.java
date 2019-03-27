@@ -56,6 +56,13 @@ public class Event {
 		return new Object[] { id, course.getCourseName(), type.toString(), getDateStr(), eventName, description };
 	}
 
+	
+	@Override
+	public String toString() {
+		return eventName;
+	}
+	
+	
 	// getters and setters
 	public long getId() {
 		return id;

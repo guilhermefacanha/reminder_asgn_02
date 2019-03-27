@@ -60,7 +60,13 @@ public class Notification
 
 		public Event getEvent() {
 			return event;
+					
 		}
+		
+		public void setEvent(Event event) {
+			this.event = event;
+		}
+
 
 		public String getNotificationName() {
 			return notificationName;
