@@ -184,7 +184,7 @@ public class EventFormView extends JInternalFrame {
 					event.setType((EventType) cmbEventType.getSelectedItem());
 					eventDAO.save(event);
 
-					JOptionPane.showMessageDialog(getContentPane(), "Course " + (edit ? "Edited!" : "Added!"), "Info",
+					JOptionPane.showMessageDialog(getContentPane(), "Event " + (edit ? "Edited!" : "Added!"), "Info",
 							JOptionPane.INFORMATION_MESSAGE);
 
 					goToListView();

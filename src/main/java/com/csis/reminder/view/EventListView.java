@@ -105,19 +105,19 @@ public class EventListView extends JInternalFrame {
 			}
 		});
 
-		// button delete course action
+		// button delete event action
 		btnDeleteCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tbEvents.getSelectedRow();
 				if (selectedRow > -1) {
 					Long id = (Long) tbEvents.getValueAt(selectedRow, 0);
 					int confirm = JOptionPane.showConfirmDialog(getContentPane(),
-							"Confirm delete Course with id " + id + " ?");
+							"Confirm delete event with id " + id + " ?");
 					if (confirm == 0) {
 						try {
 							eventDAO.deleteEvent(id);
 							dtm.removeRow(selectedRow);
-							JOptionPane.showMessageDialog(getContentPane(), "Course deleted", "Info",
+							JOptionPane.showMessageDialog(getContentPane(), "Event deleted", "Info",
 									JOptionPane.INFORMATION_MESSAGE);
 						} catch (Exception e2) {
 							JOptionPane.showMessageDialog(getContentPane(), e2.getMessage(), "Error",
