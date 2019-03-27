@@ -17,8 +17,8 @@ import com.csis.reminder.entity.enumeration.EventType;
 import com.csis.reminder.util.ScreenUtil;
 
 /**
- * @author Reminder Group Class responsible for storing user attributes and
- *         database configuration for user table
+ * @author Reminder Group Class responsible for storing Event attributes and
+ *         database configuration for Event table
  *
  */
 @Entity
