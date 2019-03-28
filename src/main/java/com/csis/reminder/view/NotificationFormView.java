@@ -316,7 +316,7 @@ public class NotificationFormView extends JInternalFrame
 		cmbEvent.setBounds(170, 101, 150, 20);
 		getContentPane().add(cmbEvent);
 
-		JLabel lblNotificationName = new JLabel("*notification Name:");
+		JLabel lblNotificationName = new JLabel("*Notification Name:");
 		lblNotificationName.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNotificationName.setBounds(10, 160, 108, 20);
 		getContentPane().add(lblNotificationName);

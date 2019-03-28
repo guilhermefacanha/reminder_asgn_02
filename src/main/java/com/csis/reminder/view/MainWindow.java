@@ -158,6 +158,19 @@ public class MainWindow extends JFrame {
 			}			
 		});
 		
+		// menu item list notifications action
+		mntnListNotifications.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				User user = UserSession.getUser();
+				NotificationListView listNotificationView = new NotificationListView(user,desktopPane);
+				desktopPane.add(listNotificationView);
+				listNotificationView.show();
+			}			
+		});
+		
+		
+		
+		
 		
 		
 	}
