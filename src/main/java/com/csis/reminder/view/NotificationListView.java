@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import com.csis.reminder.dao.NotificationDAO;
@@ -17,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NotificationListView extends JInternalFrame {
 
@@ -37,8 +40,7 @@ public class NotificationListView extends JInternalFrame {
 	 */
 	public NotificationListView( User user, JDesktopPane desktop) {
 		this.desktop = desktop;
-		this.user = user;
-		
+		this.user = user;		
 		
 		init();
 		config();
@@ -47,6 +49,9 @@ public class NotificationListView extends JInternalFrame {
 
 	}
 	
+	/**
+	 * Method which sets up basic settings for the NotificationListView frame
+	 */
 	private void config() {
 		setTitle("Notification List");
 		setClosable(true);
@@ -59,6 +64,9 @@ public class NotificationListView extends JInternalFrame {
 		tbNotifications.setDefaultRenderer(Long.class, centerRenderer);
 	}
 	
+	/**
+	 * Method which loads the notifications into the table
+	 */
 	private void loadNotifications()	{
 		dtm = (DefaultTableModel) tbNotifications.getModel();
 		List<Notification> notifications = notificationDAO.getAllNotifications(user);
@@ -68,34 +76,79 @@ public class NotificationListView extends JInternalFrame {
 		}
 	}
 	
-	private void setupActions()	{
-		
-	}
-	
-	/*
 	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NotificationListView frame = new NotificationListView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+	 * Method which sets up the event handlers
+	 */
+	private void setupActions()	{
+		// button add notification action
+		btnNewNotification.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				NotificationFormView form = new NotificationFormView(user, desktop);
+				desktop.add(form);
+				form.show();
+				
+				// close current window
+				dispose();
 			}
 		});
+		// button edit notification action
+		btnEditNotification.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int selectedRow = tbNotifications.getSelectedRow();
+				if (selectedRow > -1)	{
+					Long id = (Long) tbNotifications.getValueAt(selectedRow, 0);
+					NotificationFormView form = new NotificationFormView(user, desktop);
+					desktop.add(form);
+					form.show();
+					
+					// close current window
+					dispose();
+				}
+				else	{ // if the user has not selected a notification yet
+					JOptionPane.showMessageDialog(getContentPane(), "Select a row to edit!", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}			
+			}
+		});
+		
+		// button delete notification action
+		btnDeleteNotification.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int selectedRow = tbNotifications.getSelectedRow();
+				if (selectedRow > -1) {
+					Long id = (Long) tbNotifications.getValueAt(selectedRow, 0);
+					int confirm = JOptionPane.showConfirmDialog(getContentPane(),
+							"Confirm delete Notification with id " + id + " ?");
+					if (confirm == 0)	{
+						try	{
+							notificationDAO.deleteNotification(id);
+							dtm.removeRow(selectedRow);
+							JOptionPane.showMessageDialog(getContentPane(), "Notification deleted", "Info",
+									JOptionPane.INFORMATION_MESSAGE);
+						}
+						catch (Exception ex)	{
+							JOptionPane.showMessageDialog(getContentPane(), ex.getMessage(), "Error",
+									JOptionPane.ERROR_MESSAGE);						
+						}
+					}
+				}
+				else	{
+					JOptionPane.showMessageDialog(getContentPane(), "Select a record to be deleted!", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}			
+		});
 	}
-	*/
-
 	
 	
+	/**
+	 * Method responsible for instantiating GUI components
+	 */
 	public void init() {
 		setBounds(100, 100, 708, 367);
 		
 		btnNewNotification = new JButton("New");
+		
 		
 		btnEditNotification = new JButton("Edit");
 		

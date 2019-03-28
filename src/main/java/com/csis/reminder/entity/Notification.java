@@ -46,7 +46,7 @@ public class Notification
 		}
 
 		public Object[] getData() {
-			return new Object[] { id, event.getEventName() , notificationName, getDateStr() };
+			return new Object[] { id,event.getCourse().getCourseName(), event.getEventName() , getDateStr(), notificationName };
 		}
 
 		// getters and setters
