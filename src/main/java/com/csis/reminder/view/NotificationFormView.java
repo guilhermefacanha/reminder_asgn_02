@@ -202,12 +202,9 @@ public class NotificationFormView extends JInternalFrame
 						
 			    	notification.setDate(formatter.parse(txtDate.getText()));
 			    	notification.setNotificationName(txtNotificationName.getText());
-			    	//	notification.setCourse((Course) cmbCourse.getSelectedItem());
 	
 			    	notification.setEvent((Event) cmbEvent.getSelectedItem());
-			    	
-	//				System.out.println(" course " + notification.getEvent().getCourse());
-	//				System.out.println(" event " + notification.getEvent());
+			    	notification.setChecked(false);
 					
 					notificationDAO.save(notification);
 
@@ -240,6 +237,8 @@ public class NotificationFormView extends JInternalFrame
 		else {
 			if (!ScreenUtil.isDateValid(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT))
 				throw new Exception("Invalid input Date: " + txtDate.getText());
+			if (ScreenUtil.isDatePassed(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT))
+				throw new Exception("Date already passed: " + txtDate.getText());
 		}
 
 	}

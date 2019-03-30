@@ -5,6 +5,12 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.swing.text.MaskFormatter;
 
@@ -17,6 +23,9 @@ public class ScreenUtil {
 	
 	public static final String DATE_FORMAT = "MM/dd/yyyy";
 	public static final String DATE_TIME_FORMAT = "MM/dd/yyyy HH:mm";
+	private static LocalTime t = LocalTime.now(ZoneId.of("America/Los_Angeles"));
+	private static LocalDate today = LocalDate.now(ZoneId.of("America/Los_Angeles"));
+	
 
 	/**
 	 * Method to resize screen based on the users monitor size
@@ -64,4 +73,19 @@ public class ScreenUtil {
 		}
 	}
 
+	
+	public static boolean isDatePassed(String text, String dateTimeFormat) {
+						
+	//	if ( t.getHour() >= this.startTime  &&   t.getHour() <= this.endTime )	{
+		boolean status = false;
+		
+		try {
+		//	SimpleDateFormat format = new SimpleDateFormat(dateTimeFormat);
+    	     LocalDate dt = LocalDate.parse(text, DateTimeFormatter.ofPattern(dateTimeFormat));
+	 		if(dt.isBefore(today))  status = true;
+	   } catch (Exception e) {
+			status = false;
+		   }
+		return status;
+	}
 }
