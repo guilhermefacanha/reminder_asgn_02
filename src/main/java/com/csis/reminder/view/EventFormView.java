@@ -204,9 +204,15 @@ public class EventFormView extends JInternalFrame {
 			throw new Exception("Please fill Event Name");
 		if (txtDate.getText().isEmpty())
 			throw new Exception("Please fill Event Date");
+		if (cmbCourse.getSelectedIndex() == -1)
+			throw new Exception("Please select Course");
+		if (cmbEventType.getSelectedIndex() == -1)
+			throw new Exception("Please select Event type");
 		else {
 			if (!ScreenUtil.isDateValid(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT))
 				throw new Exception("Invalid input Date: " + txtDate.getText());
+			if (ScreenUtil.isDatePassed(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT))
+				throw new Exception("Date already passed: " + txtDate.getText());
 		}
 
 	}
