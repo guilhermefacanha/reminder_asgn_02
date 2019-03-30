@@ -36,6 +36,11 @@ public class Notification
 		
 		@Column(nullable = false)
 		private Date date;
+		
+		@Column(nullable = false)
+		private boolean checked ;
+
+		
 
 		public String getDateStr() {
 			try {
@@ -84,7 +89,15 @@ public class Notification
 			this.date = date;
 		}
 
-	
+		public boolean isChecked()
+		{
+			return checked;
+		}
+
+		public void setChecked(boolean checked)
+		{
+			this.checked = checked;
+		}
 	
 	
 }
