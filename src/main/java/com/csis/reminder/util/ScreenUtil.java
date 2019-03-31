@@ -12,7 +12,10 @@ import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
+
+import com.csis.reminder.entity.Event;
 
 /**
  * @author Reminder Group
@@ -88,4 +91,24 @@ public class ScreenUtil {
 		   }
 		return status;
 	}
+	
+	public static boolean isNotificationDatePastEvent(String notificationDateStr, String dateTimeFormat, Event event)	{
+		boolean status = false;
+		
+		try	{
+			// Parses the notificationDate from String to LocalDate
+			LocalDate notificationDate= LocalDate.parse(notificationDateStr, DateTimeFormatter.ofPattern(dateTimeFormat));
+			LocalDate eventLocalDate = LocalDate.parse(event.getDateStr(), DateTimeFormatter.ofPattern(dateTimeFormat ));
+			
+			// Compares if the notificationDate is after the eventDate, which it should not
+			if (notificationDate.isAfter(eventLocalDate))	{
+				status = true;
+			}
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error parsing dates!","Date Parsing Error", JOptionPane.ERROR_MESSAGE);			
+		}
+		return status;
+	}
+	
 }

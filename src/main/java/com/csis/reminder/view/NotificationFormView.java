@@ -168,14 +168,15 @@ public class NotificationFormView extends JInternalFrame
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				
 				try {
 					boolean edit = false;
 					validateForm();
 
 					// notification in edit mode
 					if (notification != null && notification.getId() > 0) 
-					{ edit = true;	
-					   
+					{
+						edit = true;					   
 					} 
 
 					if(notification == null)
@@ -222,7 +223,7 @@ public class NotificationFormView extends JInternalFrame
 	
 
 	private void validateForm() throws Exception {
-
+		
 		// check if form is validated
 		if (txtNotificationName.getText().isEmpty())
 			throw new Exception("Please fill notification Name");
@@ -237,6 +238,10 @@ public class NotificationFormView extends JInternalFrame
 				throw new Exception("Invalid input Date: " + txtDate.getText());
 			if (ScreenUtil.isDatePassed(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT))
 				throw new Exception("Date already passed: " + txtDate.getText());
+			// Gets selected event to validate the notification 
+			event = (Event) cmbEvent.getSelectedItem();
+			if (!ScreenUtil.isNotificationDatePastEvent(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT, event))
+				throw new Exception("Date for notification must be prior to the event's date!");
 		}
 
 	}
