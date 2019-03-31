@@ -150,27 +150,11 @@ public class NotificationFormView extends JInternalFrame
 
 	}
 
-	/**
-	 * Method to redirect the window to list view
-	 */
-//	private void goToListView() {
-//		EventListView eventListView = new EventListView(desktop, user);
-//		desktop.add(eventListView);
-//		eventListView.show();
-
-		// close current window
-//		dispose();
-//	}
+	
 
 	private void createActions() {
-
-		// btn goback action
-	//	btnGoBack.addActionListener(new ActionListener() {
-	//		public void actionPerformed(ActionEvent e) {
-	//			goToListView();
-	//		}
-	//	});
-		
+	
+		// comboBox cmbCourse action 
 		cmbCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -179,9 +163,8 @@ public class NotificationFormView extends JInternalFrame
 			}
 		});
 		
-
 		
-		// btn save notification action
+		// btnSave notification action
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -217,6 +200,21 @@ public class NotificationFormView extends JInternalFrame
 					JOptionPane.showMessageDialog(getContentPane(), e2.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
+			}
+		});
+		
+		// btnGoBack action
+		btnGoBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				NotificationListView form = new NotificationListView(user, desktop);
+				desktop.add(form);
+				form.show();
+				
+				// close current window
+				dispose();
+				
+				
 			}
 		});
 	}
@@ -326,7 +324,7 @@ public class NotificationFormView extends JInternalFrame
 		txtNotificationName.setColumns(10);
 		
 		btnGoBack = new JButton("Go Back to List");
-
+		
 		btnGoBack.setBackground(SystemColor.info);
 		btnGoBack.setBounds(10, 282, 150, 23);
 		getContentPane().add(btnGoBack);
