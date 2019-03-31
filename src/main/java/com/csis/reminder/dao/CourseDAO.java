@@ -34,12 +34,6 @@ public class CourseDAO implements Serializable {
 
 		List<Course> courses = manager.createQuery("SELECT  x FROM Course x WHERE x.user.id =" + user.getId())
 				.getResultList();
-
-		// System.out.println("u " + user.getId());
-		// for (int i=0; i<courses.size(); i++){
-		// System.out.println("Element "+i+courses.get(i));
-		// }
-
 		return courses;
 	}
 

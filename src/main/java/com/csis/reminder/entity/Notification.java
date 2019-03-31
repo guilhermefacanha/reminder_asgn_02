@@ -39,8 +39,10 @@ public class Notification
 		
 		@Column(nullable = false)
 		private boolean checked ;
-
 		
+		@Column(nullable = false)
+		private boolean isNotified = false ;
+
 
 		public String getDateStr() {
 			try {

@@ -221,7 +221,11 @@ public class NotificationFormView extends JInternalFrame
 	}
 	
 	
-
+	/**
+	 * Method which verifies if the user provided all the required inputs and if 
+	 * they are valid.
+	 * @throws Exception - a specific exception depending on which input contains an error
+	 */
 	private void validateForm() throws Exception {
 		
 		// check if form is validated
@@ -240,10 +244,9 @@ public class NotificationFormView extends JInternalFrame
 				throw new Exception("Date already passed: " + txtDate.getText());
 			// Gets selected event to validate the notification 
 			event = (Event) cmbEvent.getSelectedItem();
-			if (!ScreenUtil.isNotificationDatePastEvent(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT, event))
+			if (ScreenUtil.isNotificationDatePastEvent(txtDate.getText(), ScreenUtil.DATE_TIME_FORMAT, event))
 				throw new Exception("Date for notification must be prior to the event's date!");
 		}
-
 	}
 
 	private void init() {
