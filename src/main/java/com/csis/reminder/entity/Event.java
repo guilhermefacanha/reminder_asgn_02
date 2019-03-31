@@ -62,7 +62,6 @@ public class Event {
 		return eventName;
 	}
 	
-	
 	// getters and setters
 	public long getId() {
 		return id;
