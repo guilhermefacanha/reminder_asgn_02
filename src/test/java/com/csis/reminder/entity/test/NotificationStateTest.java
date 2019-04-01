@@ -11,15 +11,17 @@ import org.junit.jupiter.api.Test;
 
 import com.csis.reminder.entity.Course;
 import com.csis.reminder.entity.Event;
+import com.csis.reminder.entity.Notification;
 import com.csis.reminder.entity.User;
 import com.csis.reminder.entity.enumeration.EventType;
 import com.csis.reminder.util.ScreenUtil;
 
-class EventStateTest {
+class NotificationStateTest {
 
 	User user;
 	Course course;
 	Event event;
+	Notification notification;
 	DateFormat formatter = new SimpleDateFormat(ScreenUtil.DATE_FORMAT);
 	
 	
@@ -45,38 +47,47 @@ class EventStateTest {
 		// End Date - April 30th, 2019
 		course.setEndDate(formatter.parse("04/30/2019"));
 		
-		//creates dummy event
+		// creates dummy event
 		event = new Event();
 		event.setId(1);
 		event.setCourse(course);
 		event.setEventName("Quiz 1");
 		event.setDate(formatter.parse("03/25/2019"));
 		event.setType(EventType.QUIZ);
-		event.setDescription("First quiz of the semester!");		
+		event.setDescription("First quiz of the semester!");	
+		
+		// creates dummy notification
+		notification = new Notification();
+		notification.setId(1);
+		notification.setEvent(event);
+		notification.setChecked(false);
+		notification.setDate(formatter.parse("03/18/2019"));
+		notification.setNotificationName("Dont forget me");
 	}
 
 	@Test
 	void testNotificationGetSet() {
 		
-		assertTrue(event.getId() == 1);
-		assertTrue(event.getCourse() == course);
-		assertTrue(event.getEventName().equals("Quiz 1"));
-		assertTrue(event.getDescription().equals("First quiz of the semester!"));
-		assertTrue(event.getDateStr().equals("03/25/2019 00:00"));
-		assertTrue(event.getType() == EventType.QUIZ);
+		System.out.println(notification.DisplayInfo());
 		
-		System.out.println(event.DisplayInfo());
+		assertTrue(notification.getId() == 1);
+		assertTrue(notification.getEvent() == event);
+		assertTrue(notification.getEvent().getCourse() == course);
+		assertTrue(notification.getEvent().getCourse().getUser() == user);
+		assertTrue(notification.getIsNotified() == false);
+		assertTrue(notification.getNotificationName().equals("Dont forget me"));
 		
-		event.setCourse(course);
-		event.setEventName("Assignment 1");
-		event.setType(EventType.ASSIGNMENT);
-		event.setDescription("First assignment of the semester!");
 		
-		assertTrue(event.getEventName().equals("Assignment 1"));
-		assertTrue(event.getDescription().equals("First assignment of the semester!"));
-		assertTrue(event.getType() == EventType.ASSIGNMENT);
 		
-		System.out.println(event.DisplayInfo());		
+		notification.setChecked(true);
+		notification.setNotificationName("New Notification Name");
+		notification.setIsNotified(true);
+		
+		assertTrue(notification.isChecked() == true);
+		assertTrue(notification.getIsNotified() == true);
+		assertTrue(notification.getNotificationName().equals("New Notification Name"));
+		
+		System.out.println(notification.DisplayInfo());
 	}
 
 }

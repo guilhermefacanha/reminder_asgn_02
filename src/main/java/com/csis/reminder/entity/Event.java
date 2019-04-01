@@ -62,6 +62,17 @@ public class Event {
 		return eventName;
 	}
 	
+	public String DisplayInfo()	{
+		String output = "";
+		output += "\nID: " +getId()
+		+ "\nCourse: " + getCourse()
+		+ "\nEvent Name: " + getEventName()
+		+ "\nDate: " + getDateStr()
+		+ "\nEvent Type: " + getType()
+		+ "\nDescription: " + getDescription();
+		return output;
+	}
+	
 	// getters and setters
 	public long getId() {
 		return id;

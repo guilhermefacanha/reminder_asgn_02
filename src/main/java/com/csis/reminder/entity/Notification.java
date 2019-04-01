@@ -43,7 +43,19 @@ public class Notification
 		@Column(nullable = false)
 		private boolean isNotified = false ;
 
-
+		public String DisplayInfo()	{
+			String output = "";
+			output += "\nID: " +getId()
+			+ "\nEvent: " + getEvent()
+			+ "\nNotification Name: " + getNotificationName()
+			+ "\nDate: " + getDateStr()
+			+ "\nIs checked: " + isChecked()
+			+ "\nDescription: " + getIsNotified();
+			return output;
+		}
+		
+		
+		
 		public String getDateStr() {
 			try {
 				return new SimpleDateFormat(ScreenUtil.DATE_TIME_FORMAT).format(date);
@@ -100,6 +112,15 @@ public class Notification
 		{
 			this.checked = checked;
 		}
+		
+		public boolean getIsNotified()	{
+			return this.isNotified;
+		}
+		
+		public void setIsNotified(boolean isNotified) {
+			this.isNotified = isNotified;
+		}
+		
 	
 	
 }

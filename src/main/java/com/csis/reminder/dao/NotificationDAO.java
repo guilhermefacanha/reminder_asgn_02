@@ -47,7 +47,6 @@ public class NotificationDAO implements Serializable
 		} finally {
 			manager.close();
 		}
-
 	}
 	
 			
