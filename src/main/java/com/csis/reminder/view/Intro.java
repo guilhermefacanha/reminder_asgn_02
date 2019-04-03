@@ -103,7 +103,7 @@ public class Intro extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 35));
 
-		JLabel lblV = new JLabel(" v1.1");
+		JLabel lblV = new JLabel(" v1.3");
 		lblV.setHorizontalAlignment(SwingConstants.CENTER);
 		lblV.setFont(new Font("Berlin Sans FB Demi", Font.BOLD, 16));
 		GroupLayout groupLayout = new GroupLayout(getContentPane());

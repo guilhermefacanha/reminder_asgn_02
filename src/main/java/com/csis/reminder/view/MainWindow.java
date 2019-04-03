@@ -55,7 +55,7 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		init();
 		ScreenUtil.centerWindow(this);
-		setTitle("Reminder System v1.0");
+		setTitle("Reminder System v1.3");
 		setBounds(ScreenUtil.resizeScreen(0.8));
 		createWelcomeLabel();
 		createActions();
