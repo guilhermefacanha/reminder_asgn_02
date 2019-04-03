@@ -1,7 +1,12 @@
+com.csis.reminder.crud.test
 com.csis.reminder.dao
 com.csis.reminder.dao.resources
 com.csis.reminder.entity
 com.csis.reminder.entity.enumeration
+com.csis.reminder.entity.test
+com.csis.reminder.job
+com.csis.reminder.service
+com.csis.reminder.servlet
 com.csis.reminder.session
 com.csis.reminder.util
 com.csis.reminder.view
