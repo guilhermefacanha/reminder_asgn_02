@@ -149,9 +149,17 @@ public class MainWindow extends JFrame {
 		mntnAddEvents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				User user = UserSession.getUser();
-				EventFormView formView = new EventFormView(user,desktopPane);
-				desktopPane.add(formView);
-				formView.show();
+				// checks if the user has any courses registered
+				if(new CourseDAO().hasUserCourse(user)) {
+					EventFormView formView = new EventFormView(user,desktopPane);
+					desktopPane.add(formView);
+					formView.show();
+				}
+				else	{
+					JOptionPane.showMessageDialog(null, "You must have at least one Course in order to create an Event.");
+				}
+				
+				
 			}			
 		});
 		
@@ -178,8 +186,9 @@ public class MainWindow extends JFrame {
 					}
 					
 				}
-				else
+				else	{
 					JOptionPane.showMessageDialog(null, "You must have at least one Course with one Event in order to create a notification.");
+				}
 			}			
 		});
 		

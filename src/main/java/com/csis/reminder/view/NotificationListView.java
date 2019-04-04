@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import com.csis.reminder.dao.CourseDAO;
+import com.csis.reminder.dao.EventDAO;
 import com.csis.reminder.dao.NotificationDAO;
+import com.csis.reminder.entity.Course;
 import com.csis.reminder.entity.Notification;
 import com.csis.reminder.entity.User;
 import javax.swing.GroupLayout;
@@ -81,21 +83,37 @@ public class NotificationListView extends JInternalFrame {
 	 * Method which sets up the event handlers
 	 */
 	private void setupActions()	{
+		
 		// button add notification action
 		btnNewNotification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(new CourseDAO().hasUserCourse(user)) {
-					NotificationFormView form = new NotificationFormView(user, desktop);
-					desktop.add(form);
-					form.show();
+					// checks if the user has at least one Event in any of its courses
+					List<Course> courses = new CourseDAO().getAllCourses(user);
+					boolean anyEvents = false;
+					for (Course c : courses)	{
+						
+						if (new EventDAO().hasCourseEvent(c))	{
+							anyEvents = true;
+							NotificationFormView form = new NotificationFormView(user, desktop);
+							desktop.add(form);
+							form.show();		
+							// close current window
+							dispose();
+							break;
+						}
+					}
+					if (!anyEvents)	{
+						JOptionPane.showMessageDialog(null, "You must have at least one Event registered in any of your Courses in order to create a notification.");
+					}
 					
-					// close current window
-					dispose();
 				}
-				else
+				else	{
 					JOptionPane.showMessageDialog(null, "You must have at least one Course with one Event in order to create a notification.");
+				}
 			}
 		});
+		
 		// button edit notification action
 		btnEditNotification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

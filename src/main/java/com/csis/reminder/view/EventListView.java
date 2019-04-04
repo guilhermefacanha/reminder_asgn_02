@@ -18,6 +18,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.csis.reminder.dao.CourseDAO;
 import com.csis.reminder.dao.EventDAO;
 import com.csis.reminder.entity.Event;
 import com.csis.reminder.entity.User;
@@ -77,13 +78,19 @@ public class EventListView extends JInternalFrame {
 		// button add course action
 		btnNewCourse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// create a new Course form window to show
-				EventFormView form = new EventFormView(user,desktop);
-				desktop.add(form);
-				form.show();
-
-				// close current window
-				dispose();
+				
+				// checks if the user has any courses registered
+				if(new CourseDAO().hasUserCourse(user)) {
+					// create a new Course form window to show
+					EventFormView form = new EventFormView(user,desktop);
+					desktop.add(form);
+					form.show();	
+					// close current window
+					dispose();
+				}
+				else	{
+					JOptionPane.showMessageDialog(null, "You must have at least one Course in order to create an Event.");
+				}				
 			}
 		});
 
