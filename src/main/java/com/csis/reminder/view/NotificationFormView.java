@@ -65,6 +65,9 @@ public class NotificationFormView extends JInternalFrame
 		init();
 		config();
 		createActions();
+		if (cmbCourse.getModel().getSize() == 0)	{
+			dispose();
+		}
 	}
 
 	/**
@@ -85,8 +88,14 @@ public class NotificationFormView extends JInternalFrame
 		this(desktop);
 		this.user = user;
 		this.userCourses = courseDAO.getAllCourses(this.user);
+		// Checks if the user has any courses registered
+		if (userCourses.isEmpty())	{
+			JOptionPane.showMessageDialog(null, "You must have at least one Course with one Event in order to create a notification.");	
+		}
+		else	{
 		loadComboCourse();
 		cmbCourse.setSelectedIndex(0);
+		}
 	}
 
 	/**
@@ -109,8 +118,11 @@ public class NotificationFormView extends JInternalFrame
 	}
 
 	private void loadEvents(Course course) {
-	this.events = eventDAO.getAllEventsByCourse(course);
-	  loadComboEvent();
+		this.events = eventDAO.getAllEventsByCourse(course);
+		loadComboEvent();
+		if (cmbEvent.getModel().getSize() == 0)	{		
+			JOptionPane.showMessageDialog(null, "You must have at least one Event recorded for a course in order to create a notification.");					
+		}
 	}
 	
 	private void loadComboEvent() {
@@ -119,6 +131,7 @@ public class NotificationFormView extends JInternalFrame
 			cmbEvent.addItem(event);
 			System.out.println(" item " + event.getEventName());
 		}
+		
 
 	}
 	/**
