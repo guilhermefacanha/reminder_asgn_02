@@ -97,7 +97,7 @@ public class NotificationListView extends JInternalFrame {
 				int selectedRow = tbNotifications.getSelectedRow();
 				if (selectedRow > -1)	{
 					Long id = (Long) tbNotifications.getValueAt(selectedRow, 0);
-					NotificationFormView form = new NotificationFormView(user, desktop);
+					NotificationFormView form = new NotificationFormView(id, user, desktop);
 					desktop.add(form);
 					form.show();
 					
