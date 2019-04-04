@@ -87,12 +87,35 @@ public class EventDAO implements Serializable {
 	 * 
 	 * @param eventId
 	 *            - the unique identifier for each course
+	 * @throws Exception 
 	 */
-	public void deleteEvent(Long eventId) {
+	public void deleteEvent(Long eventId) throws Exception {
 		EntityManager manager = Resources.getEntityManager();
-		manager.getTransaction().begin();
-		manager.createQuery("DELETE FROM Event x WHERE x.id = :id").setParameter("id", eventId).executeUpdate();
-		manager.getTransaction().commit();
+		EntityTransaction transaction = manager.getTransaction();
+		
+		@SuppressWarnings("rawtypes")
+		List list = manager.createQuery("SELECT x FROM Notification x WHERE x.event.id = :id").setParameter("id", eventId)
+				.getResultList();
+
+		if (list != null && list.size() > 0)
+			throw new Exception(
+					"The Event is related to notifications. Delete the notifications first to be able to delete the event!");
+
+		
+		try {
+			manager.getTransaction().begin();
+			manager.createQuery("DELETE FROM Event x WHERE x.id = :id").setParameter("id", eventId).executeUpdate();
+			manager.getTransaction().commit();
+		} catch (RuntimeException e) {
+			if (transaction != null)
+				transaction.rollback();
+			throw e;
+		} finally {
+			manager.close();
+		}
+		
+		
+		
 	}
 
 	public Event getEvent(long eventId) {
