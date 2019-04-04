@@ -65,9 +65,6 @@ public class NotificationFormView extends JInternalFrame
 		init();
 		config();
 		createActions();
-		if (cmbCourse.getModel().getSize() == 0)	{
-			dispose();
-		}
 	}
 
 	/**
@@ -88,14 +85,9 @@ public class NotificationFormView extends JInternalFrame
 		this(desktop);
 		this.user = user;
 		this.userCourses = courseDAO.getAllCourses(this.user);
-		// Checks if the user has any courses registered
-		if (userCourses.isEmpty())	{
-			JOptionPane.showMessageDialog(null, "You must have at least one Course with one Event in order to create a notification.");	
-		}
-		else	{
 		loadComboCourse();
-		cmbCourse.setSelectedIndex(0);
-		}
+		
+		
 	}
 
 	/**
@@ -119,9 +111,13 @@ public class NotificationFormView extends JInternalFrame
 
 	private void loadEvents(Course course) {
 		this.events = eventDAO.getAllEventsByCourse(course);
+		// checks if there are events for a that course, if not, removes that course from the cmbCourse
+		if (events.isEmpty())	{
+			cmbCourse.removeItem(course);
+			loadEvents((Course)cmbCourse.getSelectedItem());
+		}
+		else	{
 		loadComboEvent();
-		if (cmbEvent.getModel().getSize() == 0)	{		
-			JOptionPane.showMessageDialog(null, "You must have at least one Event recorded for a course in order to create a notification.");					
 		}
 	}
 	
@@ -208,7 +204,7 @@ public class NotificationFormView extends JInternalFrame
 				  	JOptionPane.showMessageDialog(getContentPane(), "Notification " + (edit ? "Edited!" : "Added!"), "Info",
 							JOptionPane.INFORMATION_MESSAGE);
 
-			//		goToListView();
+					goToListView();
 					
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(getContentPane(), e2.getMessage(), "Error",
@@ -232,6 +228,20 @@ public class NotificationFormView extends JInternalFrame
 			}
 		});
 	}
+	
+	
+	/**
+	 * Method to redirect the window to list view
+	 */
+	private void goToListView() {
+		NotificationListView notificationListView = new NotificationListView(user, desktop);
+		desktop.add(notificationListView);
+		notificationListView.show();
+
+		// close current window
+		dispose();
+	}
+	
 	
 	
 	/**

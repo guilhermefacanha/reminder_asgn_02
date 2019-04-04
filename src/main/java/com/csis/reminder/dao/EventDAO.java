@@ -38,6 +38,20 @@ public class EventDAO implements Serializable {
 			manager.persist(event);
 		transaction.commit();
 	}
+	
+	/**
+	 * 
+	 * @param course to search specific events of a course
+	 * @return true or false if courses that course has events or not
+	 */
+	public boolean hasCourseEvent(Course course) {
+		if (getAllEventsByCourse(course).isEmpty())	{
+			return false;	
+		}
+		
+		return true;
+	}
+	
 
 	/**
 	 * Method which retrieves all the events of a user and returns a list of them
@@ -64,8 +78,7 @@ public class EventDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<Event> getAllEventsByCourse(Course course) {
 		EntityManager manager = Resources.getEntityManager();
-		List<Event> events = manager.createQuery("SELECT x FROM Event x WHERE x.course.id = :id")
-				.setParameter("id", course.getId()).getResultList();
+		List<Event> events = manager.createQuery("SELECT x FROM Event x WHERE x.course.id = :id").setParameter("id", course.getId()).getResultList();
 		return events;
 	}
 

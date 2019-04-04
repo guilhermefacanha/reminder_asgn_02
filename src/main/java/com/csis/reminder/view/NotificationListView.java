@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import com.csis.reminder.dao.CourseDAO;
 import com.csis.reminder.dao.NotificationDAO;
 import com.csis.reminder.entity.Notification;
 import com.csis.reminder.entity.User;
@@ -83,12 +84,16 @@ public class NotificationListView extends JInternalFrame {
 		// button add notification action
 		btnNewNotification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				NotificationFormView form = new NotificationFormView(user, desktop);
-				desktop.add(form);
-				form.show();
-				
-				// close current window
-				dispose();
+				if(new CourseDAO().hasUserCourse(user)) {
+					NotificationFormView form = new NotificationFormView(user, desktop);
+					desktop.add(form);
+					form.show();
+					
+					// close current window
+					dispose();
+				}
+				else
+					JOptionPane.showMessageDialog(null, "You must have at least one Course with one Event in order to create a notification.");
 			}
 		});
 		// button edit notification action

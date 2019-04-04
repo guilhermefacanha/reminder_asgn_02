@@ -3,6 +3,7 @@ package com.csis.reminder.view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -12,11 +13,15 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
+import com.csis.reminder.dao.CourseDAO;
+import com.csis.reminder.dao.EventDAO;
+import com.csis.reminder.entity.Course;
 import com.csis.reminder.entity.User;
 import com.csis.reminder.entity.enumeration.UserType;
 import com.csis.reminder.session.UserSession;
@@ -36,6 +41,8 @@ public class MainWindow extends JFrame {
 
 	private JLabel lblWelcome;
 	private JMenu mnUsers;
+	
+	List<Course> courses;
 	
 	private JMenu mnCourses;
 	private JMenuItem mntnListCourses;
@@ -152,9 +159,27 @@ public class MainWindow extends JFrame {
 		mntnAddNotifications.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				User user = UserSession.getUser();
-				NotificationFormView formView = new NotificationFormView(user,desktopPane);
-				desktopPane.add(formView);
-				formView.show();
+				if(new CourseDAO().hasUserCourse(user)) {
+					// checks if the user has at least one Event in any of its courses
+					courses = new CourseDAO().getAllCourses(user);
+					boolean anyEvents = false;
+					for (Course c : courses)	{
+						
+						if (new EventDAO().hasCourseEvent(c))	{
+							anyEvents = true;
+							NotificationFormView formView = new NotificationFormView(user,desktopPane);
+							desktopPane.add(formView);
+							formView.show();
+							break;
+						}
+					}
+					if (!anyEvents)	{
+						JOptionPane.showMessageDialog(null, "You must have at least one Event registered in any of your Courses in order to create a notification.");
+					}
+					
+				}
+				else
+					JOptionPane.showMessageDialog(null, "You must have at least one Course with one Event in order to create a notification.");
 			}			
 		});
 		

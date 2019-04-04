@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.swing.JOptionPane;
 
 import com.csis.reminder.dao.resources.Resources;
 import com.csis.reminder.entity.Course;
@@ -26,6 +27,14 @@ public class CourseDAO implements Serializable {
 	public void initSelec() {
 		EntityManager manager = Resources.getEntityManager();
 		manager.find(Course.class, new Long(1));
+	}
+	
+	public boolean hasUserCourse(User user) {
+		if (getAllCourses(user).isEmpty())	{
+			return false;	
+		}
+		
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")
