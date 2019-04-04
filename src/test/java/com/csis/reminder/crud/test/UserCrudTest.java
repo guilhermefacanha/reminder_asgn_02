@@ -15,6 +15,7 @@ import com.csis.reminder.entity.User;
 public class UserCrudTest {
 	User user;
 	UserDAO dao;
+	long userid;
 	
 	@BeforeAll
 	void setupDao() {
@@ -42,8 +43,9 @@ public class UserCrudTest {
 		user.setPassword("123");
 		
 		dao.saveUser(user);
+		userid = user.getId();
 
-		assertTrue(user.getId() == 1);
+		assertTrue(userid > 0);
 	}
 	
 	private void testUserGetByEmail() {
@@ -51,8 +53,8 @@ public class UserCrudTest {
 	}
 	
 	private void testUserGet() {
-		user = dao.getUser(1);
-		assertTrue(user.getId() == 1);
+		user = dao.getUser(userid);
+		assertTrue(user.getId() == userid);
 		assertTrue(user.getEmail().equals("admin@email.com"));
 		assertTrue(user.isEnabled() == true);
 		assertTrue(user.getLastName().equals("Doe"));
