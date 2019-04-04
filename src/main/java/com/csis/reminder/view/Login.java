@@ -87,22 +87,98 @@ public class Login extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String email = txtEmail.getText();
 				String password = new String(txtPassword.getPassword());
-				// verify login
-				if (userDao.verifyLogin(email,password)) {
-					JOptionPane.showMessageDialog(getContentPane(), "Login Successful!", "",
-							JOptionPane.INFORMATION_MESSAGE);
-					
-					mainWindow = new MainWindow();
-					if (!mainWindow.isVisible()) {
-						setVisible(false);
-						mainWindow.setVisible(true);
-					}
-				} else {
-					JOptionPane.showMessageDialog(getContentPane(), "Email/Password Invalid!", "Login Error",
+				
+				if (email.isEmpty() || password.isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Please enter username and password!", "Login Error",
 							JOptionPane.ERROR_MESSAGE);
+				}
+				else	{
+					// verify login
+					if (userDao.verifyLogin(email,password)) {
+						JOptionPane.showMessageDialog(getContentPane(), "Login Successful!", "",
+								JOptionPane.INFORMATION_MESSAGE);
+						
+						mainWindow = new MainWindow();
+						if (!mainWindow.isVisible()) {
+							setVisible(false);
+							mainWindow.setVisible(true);
+						}
+					} else {
+						JOptionPane.showMessageDialog(getContentPane(), "Email/Password Invalid!", "Login Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		});
+		
+		// action for pressing the ENTER KEY in the password field
+		txtPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent key) {
+				
+				if (key.getKeyCode()==KeyEvent.VK_ENTER)	{
+					String email = txtEmail.getText();
+					String password = new String(txtPassword.getPassword());
+					
+					if (email.isEmpty() || password.isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Please enter username and password!", "Login Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					else	{
+						// verify login
+						if (userDao.verifyLogin(email,password)) {
+							JOptionPane.showMessageDialog(getContentPane(), "Login Successful!", "",
+									JOptionPane.INFORMATION_MESSAGE);
+							
+							mainWindow = new MainWindow();
+							if (!mainWindow.isVisible()) {
+								setVisible(false);
+								mainWindow.setVisible(true);
+							}
+						} else {
+							JOptionPane.showMessageDialog(getContentPane(), "Email/Password Invalid!", "Login Error",
+									JOptionPane.ERROR_MESSAGE);
+						}						
+					}									
+				}
+				
+			}
+		});
+		
+		
+		// action for pressing the ENTER KEY in the email field
+		txtEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent key) {
+				
+				if (key.getKeyCode()==KeyEvent.VK_ENTER)	{
+					String email = txtEmail.getText();
+					String password = new String(txtPassword.getPassword());
+					
+					if (email.isEmpty() || password.isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Please enter username and password!", "Login Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					else	{
+						// verify login
+						if (userDao.verifyLogin(email,password)) {
+							JOptionPane.showMessageDialog(getContentPane(), "Login Successful!", "",
+									JOptionPane.INFORMATION_MESSAGE);
+							
+							mainWindow = new MainWindow();
+							if (!mainWindow.isVisible()) {
+								setVisible(false);
+								mainWindow.setVisible(true);
+							}
+						} else {
+							JOptionPane.showMessageDialog(getContentPane(), "Email/Password Invalid!", "Login Error",
+									JOptionPane.ERROR_MESSAGE);
+						}						
+					}									
+				}				
+			}
+		});
+		
 	}
 
 	/**
@@ -120,6 +196,7 @@ public class Login extends JFrame {
 		lblLogin.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		txtEmail = new JTextField();
+		
 		txtEmail.setColumns(10);
 
 		JLabel lblEmail = new JLabel("Email");
@@ -129,10 +206,12 @@ public class Login extends JFrame {
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		txtPassword = new JPasswordField();
+		
 	
 		JSeparator separator = new JSeparator();
 
 		btnEnter = new JButton("Enter");
+		
 		btnEnter.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnEnter.setBackground(UIManager.getColor("InternalFrame.inactiveTitleGradient"));
 
